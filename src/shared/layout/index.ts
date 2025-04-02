@@ -1,0 +1,6 @@
+export * from "./main-layout"
+export * from "./inner-layout"
+export * from "./main-content"
+export * from "./sidebar"
+export * from "./header"
+export * from "./footer"
