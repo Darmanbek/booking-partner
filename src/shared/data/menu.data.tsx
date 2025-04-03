@@ -21,7 +21,7 @@ export const menuData: MenuItem[] = [
 		label: "Доступность и цены"
 	},
 	{
-		key: "/reservations",
+		key: "/orders",
 		icon: <OrderedListOutlined />,
 		label: "Бронирования"
 	},

@@ -16,7 +16,7 @@ import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutImport } from "./routes/_layout"
 import { Route as LayoutIndexImport } from "./routes/_layout/index"
 import { Route as LayoutRoomsImport } from "./routes/_layout/rooms"
-import { Route as LayoutReservationsImport } from "./routes/_layout/reservations"
+import { Route as LayoutOrdersImport } from "./routes/_layout/orders"
 import { Route as LayoutAvailabilityPricesImport } from "./routes/_layout/availability-prices"
 import { Route as LayoutPaymentsPaymentsLayoutImport } from "./routes/_layout/payments/_payments-layout"
 import { Route as LayoutHotelHotelLayoutImport } from "./routes/_layout/hotel/_hotel-layout"
@@ -62,9 +62,9 @@ const LayoutRoomsRoute = LayoutRoomsImport.update({
   getParentRoute: () => LayoutRoute,
 } as any)
 
-const LayoutReservationsRoute = LayoutReservationsImport.update({
-  id: "/reservations",
-  path: "/reservations",
+const LayoutOrdersRoute = LayoutOrdersImport.update({
+  id: "/orders",
+  path: "/orders",
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -138,11 +138,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutAvailabilityPricesImport
       parentRoute: typeof LayoutImport
     }
-    "/_layout/reservations": {
-      id: "/_layout/reservations"
-      path: "/reservations"
-      fullPath: "/reservations"
-      preLoaderRoute: typeof LayoutReservationsImport
+    "/_layout/orders": {
+      id: "/_layout/orders"
+      path: "/orders"
+      fullPath: "/orders"
+      preLoaderRoute: typeof LayoutOrdersImport
       parentRoute: typeof LayoutImport
     }
     "/_layout/rooms": {
@@ -289,7 +289,7 @@ const LayoutPaymentsRouteWithChildren = LayoutPaymentsRoute._addFileChildren(
 
 interface LayoutRouteChildren {
   LayoutAvailabilityPricesRoute: typeof LayoutAvailabilityPricesRoute
-  LayoutReservationsRoute: typeof LayoutReservationsRoute
+  LayoutOrdersRoute: typeof LayoutOrdersRoute
   LayoutRoomsRoute: typeof LayoutRoomsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutHotelRoute: typeof LayoutHotelRouteWithChildren
@@ -298,7 +298,7 @@ interface LayoutRouteChildren {
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAvailabilityPricesRoute: LayoutAvailabilityPricesRoute,
-  LayoutReservationsRoute: LayoutReservationsRoute,
+  LayoutOrdersRoute: LayoutOrdersRoute,
   LayoutRoomsRoute: LayoutRoomsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutHotelRoute: LayoutHotelRouteWithChildren,
@@ -311,7 +311,7 @@ const LayoutRouteWithChildren =
 export interface FileRoutesByFullPath {
   "": typeof LayoutRouteWithChildren
   "/availability-prices": typeof LayoutAvailabilityPricesRoute
-  "/reservations": typeof LayoutReservationsRoute
+  "/orders": typeof LayoutOrdersRoute
   "/rooms": typeof LayoutRoomsRoute
   "/": typeof LayoutIndexRoute
   "/hotel": typeof LayoutHotelHotelLayoutRouteWithChildren
@@ -325,7 +325,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   "/availability-prices": typeof LayoutAvailabilityPricesRoute
-  "/reservations": typeof LayoutReservationsRoute
+  "/orders": typeof LayoutOrdersRoute
   "/rooms": typeof LayoutRoomsRoute
   "/": typeof LayoutIndexRoute
   "/hotel": typeof LayoutHotelHotelLayoutIndexRoute
@@ -339,7 +339,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   "/_layout": typeof LayoutRouteWithChildren
   "/_layout/availability-prices": typeof LayoutAvailabilityPricesRoute
-  "/_layout/reservations": typeof LayoutReservationsRoute
+  "/_layout/orders": typeof LayoutOrdersRoute
   "/_layout/rooms": typeof LayoutRoomsRoute
   "/_layout/": typeof LayoutIndexRoute
   "/_layout/hotel": typeof LayoutHotelRouteWithChildren
@@ -358,7 +358,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ""
     | "/availability-prices"
-    | "/reservations"
+    | "/orders"
     | "/rooms"
     | "/"
     | "/hotel"
@@ -371,7 +371,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | "/availability-prices"
-    | "/reservations"
+    | "/orders"
     | "/rooms"
     | "/"
     | "/hotel"
@@ -383,7 +383,7 @@ export interface FileRouteTypes {
     | "__root__"
     | "/_layout"
     | "/_layout/availability-prices"
-    | "/_layout/reservations"
+    | "/_layout/orders"
     | "/_layout/rooms"
     | "/_layout/"
     | "/_layout/hotel"
@@ -423,7 +423,7 @@ export const routeTree = rootRoute
       "filePath": "_layout.tsx",
       "children": [
         "/_layout/availability-prices",
-        "/_layout/reservations",
+        "/_layout/orders",
         "/_layout/rooms",
         "/_layout/",
         "/_layout/hotel",
@@ -434,8 +434,8 @@ export const routeTree = rootRoute
       "filePath": "_layout/availability-prices.tsx",
       "parent": "/_layout"
     },
-    "/_layout/reservations": {
-      "filePath": "_layout/reservations.tsx",
+    "/_layout/orders": {
+      "filePath": "_layout/orders.tsx",
       "parent": "/_layout"
     },
     "/_layout/rooms": {
