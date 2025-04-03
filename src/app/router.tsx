@@ -2,6 +2,7 @@ import { LoadingOutlined } from "@ant-design/icons"
 import { createRouter } from "@tanstack/react-router"
 import Spin from "antd/es/spin"
 import { routeTree } from "src/routeTree.gen"
+import { NotFound } from "src/shared/layout"
 // Import the generated route tree
 
 // Create a new router instance
@@ -19,7 +20,8 @@ export const router = createRouter({
 			spinning={true}
 			indicator={<LoadingOutlined style={{ fontSize: 32, color: "#fff" }} />}
 		/>
-	)
+	),
+	defaultNotFoundComponent: NotFound
 })
 
 // Register the router instance for type safety

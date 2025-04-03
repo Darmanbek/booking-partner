@@ -4,7 +4,7 @@ import { type FC } from "react"
 const Footer: FC = () => {
 	return (
 		<LayoutFooter style={{ textAlign: "center" }}>
-			Ant Design ©{new Date().getFullYear()} Created by Ant UED
+			Booking Admin ©{new Date().getFullYear()} Created by AralHub
 		</LayoutFooter>
 	)
 }

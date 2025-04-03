@@ -1,39 +1,33 @@
-import {
-	AppstoreOutlined,
-	BarChartOutlined,
-	CloudOutlined,
-	ShopOutlined,
-	TeamOutlined,
-	UploadOutlined,
-	UserOutlined,
-	VideoCameraOutlined
-} from "@ant-design/icons"
-import { Menu, type MenuProps } from "antd"
-import { createElement, type FC } from "react"
-
-const items: MenuProps["items"] = [
-	UserOutlined,
-	VideoCameraOutlined,
-	UploadOutlined,
-	BarChartOutlined,
-	CloudOutlined,
-	AppstoreOutlined,
-	TeamOutlined,
-	ShopOutlined
-].map((icon, index) => ({
-	key: String(index + 1),
-	icon: createElement(icon),
-	label: `nav ${index + 1}`
-}))
+import { MenuOutlined } from "@ant-design/icons"
+import { useLocation, useNavigate } from "@tanstack/react-router"
+import Menu from "antd/es/menu"
+import { type FC } from "react"
+import { menuData } from "src/shared/data"
 
 const Menubar: FC = () => {
+	const { pathname } = useLocation()
+	const navigate = useNavigate()
+
+	const onSelectMenu = (key: string) => {
+		navigate({
+			to: key
+		})
+	}
+
+	const activeKey =
+		menuData
+			.find((el) => (pathname.startsWith(`${el?.key}`) ? pathname : ""))
+			?.key?.toString() || ""
+
 	return (
 		<>
 			<Menu
 				theme={"light"}
 				mode={"horizontal"}
-				defaultSelectedKeys={["4"]}
-				items={items}
+				overflowedIndicator={<MenuOutlined style={{ paddingInline: 16 }} />}
+				selectedKeys={[activeKey]}
+				onSelect={(item) => onSelectMenu(item.key)}
+				items={menuData}
 			/>
 		</>
 	)

@@ -5,9 +5,8 @@ import {
 	InnerLayout,
 	MainContent,
 	MainLayout,
-	Sidebar
+	Menubar
 } from "src/shared/layout"
-import { Menubar } from "src/shared/layout/menubar"
 
 export const Route = createFileRoute("/_layout")({
 	component: RouteComponent
@@ -16,7 +15,7 @@ export const Route = createFileRoute("/_layout")({
 function RouteComponent() {
 	return (
 		<MainLayout>
-			<Sidebar />
+			{/*<Sidebar />*/}
 			<InnerLayout>
 				<Header />
 				<Menubar />

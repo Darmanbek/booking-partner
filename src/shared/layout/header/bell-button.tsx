@@ -1,5 +1,5 @@
 import { BellOutlined } from "@ant-design/icons"
-import { Button } from "antd"
+import Button from "antd/es/button"
 import { type FC } from "react"
 
 const BellButton: FC = () => {

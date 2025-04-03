@@ -4,7 +4,6 @@ import { type FC } from "react"
 import { useToken } from "src/shared/hooks"
 import { Logo } from "src/widgets/logo"
 import { BellButton } from "./header/bell-button"
-import { MenuButton } from "./header/menu-button"
 import { ProfileAvatar } from "./header/profile-avatar"
 
 const Header: FC = () => {
@@ -13,12 +12,12 @@ const Header: FC = () => {
 		<LayoutHeader
 			style={{
 				backgroundColor: token.colorBgContainer,
-				paddingInline: token.paddingLG
+				paddingInline: token.paddingLG,
+				whiteSpace: "nowrap"
 			}}
 		>
 			<Flex align={"center"} gap={8} justify={"space-between"}>
 				<Space>
-					<MenuButton />
 					<Logo />
 				</Space>
 

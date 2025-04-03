@@ -1,6 +1,10 @@
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons"
-import { Avatar, Flex, Popover, Space, Typography } from "antd"
+import Avatar from "antd/es/avatar"
+import Flex from "antd/es/flex"
 import Menu from "antd/es/menu"
+import Popover from "antd/es/popover"
+import Space from "antd/es/space"
+import Typography from "antd/es/typography"
 import { type FC } from "react"
 
 const ProfileAvatar: FC = () => {

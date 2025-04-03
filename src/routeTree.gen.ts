@@ -8,11 +8,28 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from "@tanstack/react-router"
+
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutImport } from "./routes/_layout"
 import { Route as LayoutIndexImport } from "./routes/_layout/index"
+import { Route as LayoutRoomsImport } from "./routes/_layout/rooms"
+import { Route as LayoutReservationsImport } from "./routes/_layout/reservations"
+import { Route as LayoutAvailabilityPricesImport } from "./routes/_layout/availability-prices"
+import { Route as LayoutPaymentsPaymentsLayoutImport } from "./routes/_layout/payments/_payments-layout"
+import { Route as LayoutHotelHotelLayoutImport } from "./routes/_layout/hotel/_hotel-layout"
+import { Route as LayoutPaymentsPaymentsLayoutIndexImport } from "./routes/_layout/payments/_payments-layout/index"
+import { Route as LayoutHotelHotelLayoutIndexImport } from "./routes/_layout/hotel/_hotel-layout/index"
+import { Route as LayoutHotelHotelLayoutRulesImport } from "./routes/_layout/hotel/_hotel-layout/rules"
+import { Route as LayoutHotelHotelLayoutReviewsImport } from "./routes/_layout/hotel/_hotel-layout/reviews"
+import { Route as LayoutHotelHotelLayoutAmenitiesImport } from "./routes/_layout/hotel/_hotel-layout/amenities"
+
+// Create Virtual Routes
+
+const LayoutPaymentsImport = createFileRoute("/_layout/payments")()
+const LayoutHotelImport = createFileRoute("/_layout/hotel")()
 
 // Create/Update Routes
 
@@ -21,11 +38,87 @@ const LayoutRoute = LayoutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const LayoutPaymentsRoute = LayoutPaymentsImport.update({
+  id: "/payments",
+  path: "/payments",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutHotelRoute = LayoutHotelImport.update({
+  id: "/hotel",
+  path: "/hotel",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const LayoutIndexRoute = LayoutIndexImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => LayoutRoute,
 } as any)
+
+const LayoutRoomsRoute = LayoutRoomsImport.update({
+  id: "/rooms",
+  path: "/rooms",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutReservationsRoute = LayoutReservationsImport.update({
+  id: "/reservations",
+  path: "/reservations",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutAvailabilityPricesRoute = LayoutAvailabilityPricesImport.update({
+  id: "/availability-prices",
+  path: "/availability-prices",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutPaymentsPaymentsLayoutRoute =
+  LayoutPaymentsPaymentsLayoutImport.update({
+    id: "/_payments-layout",
+    getParentRoute: () => LayoutPaymentsRoute,
+  } as any)
+
+const LayoutHotelHotelLayoutRoute = LayoutHotelHotelLayoutImport.update({
+  id: "/_hotel-layout",
+  getParentRoute: () => LayoutHotelRoute,
+} as any)
+
+const LayoutPaymentsPaymentsLayoutIndexRoute =
+  LayoutPaymentsPaymentsLayoutIndexImport.update({
+    id: "/",
+    path: "/",
+    getParentRoute: () => LayoutPaymentsPaymentsLayoutRoute,
+  } as any)
+
+const LayoutHotelHotelLayoutIndexRoute =
+  LayoutHotelHotelLayoutIndexImport.update({
+    id: "/",
+    path: "/",
+    getParentRoute: () => LayoutHotelHotelLayoutRoute,
+  } as any)
+
+const LayoutHotelHotelLayoutRulesRoute =
+  LayoutHotelHotelLayoutRulesImport.update({
+    id: "/rules",
+    path: "/rules",
+    getParentRoute: () => LayoutHotelHotelLayoutRoute,
+  } as any)
+
+const LayoutHotelHotelLayoutReviewsRoute =
+  LayoutHotelHotelLayoutReviewsImport.update({
+    id: "/reviews",
+    path: "/reviews",
+    getParentRoute: () => LayoutHotelHotelLayoutRoute,
+  } as any)
+
+const LayoutHotelHotelLayoutAmenitiesRoute =
+  LayoutHotelHotelLayoutAmenitiesImport.update({
+    id: "/amenities",
+    path: "/amenities",
+    getParentRoute: () => LayoutHotelHotelLayoutRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -38,6 +131,27 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
+    "/_layout/availability-prices": {
+      id: "/_layout/availability-prices"
+      path: "/availability-prices"
+      fullPath: "/availability-prices"
+      preLoaderRoute: typeof LayoutAvailabilityPricesImport
+      parentRoute: typeof LayoutImport
+    }
+    "/_layout/reservations": {
+      id: "/_layout/reservations"
+      path: "/reservations"
+      fullPath: "/reservations"
+      preLoaderRoute: typeof LayoutReservationsImport
+      parentRoute: typeof LayoutImport
+    }
+    "/_layout/rooms": {
+      id: "/_layout/rooms"
+      path: "/rooms"
+      fullPath: "/rooms"
+      preLoaderRoute: typeof LayoutRoomsImport
+      parentRoute: typeof LayoutImport
+    }
     "/_layout/": {
       id: "/_layout/"
       path: "/"
@@ -45,17 +159,150 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutIndexImport
       parentRoute: typeof LayoutImport
     }
+    "/_layout/hotel": {
+      id: "/_layout/hotel"
+      path: "/hotel"
+      fullPath: "/hotel"
+      preLoaderRoute: typeof LayoutHotelImport
+      parentRoute: typeof LayoutImport
+    }
+    "/_layout/hotel/_hotel-layout": {
+      id: "/_layout/hotel/_hotel-layout"
+      path: "/hotel"
+      fullPath: "/hotel"
+      preLoaderRoute: typeof LayoutHotelHotelLayoutImport
+      parentRoute: typeof LayoutHotelRoute
+    }
+    "/_layout/payments": {
+      id: "/_layout/payments"
+      path: "/payments"
+      fullPath: "/payments"
+      preLoaderRoute: typeof LayoutPaymentsImport
+      parentRoute: typeof LayoutImport
+    }
+    "/_layout/payments/_payments-layout": {
+      id: "/_layout/payments/_payments-layout"
+      path: "/payments"
+      fullPath: "/payments"
+      preLoaderRoute: typeof LayoutPaymentsPaymentsLayoutImport
+      parentRoute: typeof LayoutPaymentsRoute
+    }
+    "/_layout/hotel/_hotel-layout/amenities": {
+      id: "/_layout/hotel/_hotel-layout/amenities"
+      path: "/amenities"
+      fullPath: "/hotel/amenities"
+      preLoaderRoute: typeof LayoutHotelHotelLayoutAmenitiesImport
+      parentRoute: typeof LayoutHotelHotelLayoutImport
+    }
+    "/_layout/hotel/_hotel-layout/reviews": {
+      id: "/_layout/hotel/_hotel-layout/reviews"
+      path: "/reviews"
+      fullPath: "/hotel/reviews"
+      preLoaderRoute: typeof LayoutHotelHotelLayoutReviewsImport
+      parentRoute: typeof LayoutHotelHotelLayoutImport
+    }
+    "/_layout/hotel/_hotel-layout/rules": {
+      id: "/_layout/hotel/_hotel-layout/rules"
+      path: "/rules"
+      fullPath: "/hotel/rules"
+      preLoaderRoute: typeof LayoutHotelHotelLayoutRulesImport
+      parentRoute: typeof LayoutHotelHotelLayoutImport
+    }
+    "/_layout/hotel/_hotel-layout/": {
+      id: "/_layout/hotel/_hotel-layout/"
+      path: "/"
+      fullPath: "/hotel/"
+      preLoaderRoute: typeof LayoutHotelHotelLayoutIndexImport
+      parentRoute: typeof LayoutHotelHotelLayoutImport
+    }
+    "/_layout/payments/_payments-layout/": {
+      id: "/_layout/payments/_payments-layout/"
+      path: "/"
+      fullPath: "/payments/"
+      preLoaderRoute: typeof LayoutPaymentsPaymentsLayoutIndexImport
+      parentRoute: typeof LayoutPaymentsPaymentsLayoutImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface LayoutHotelHotelLayoutRouteChildren {
+  LayoutHotelHotelLayoutAmenitiesRoute: typeof LayoutHotelHotelLayoutAmenitiesRoute
+  LayoutHotelHotelLayoutReviewsRoute: typeof LayoutHotelHotelLayoutReviewsRoute
+  LayoutHotelHotelLayoutRulesRoute: typeof LayoutHotelHotelLayoutRulesRoute
+  LayoutHotelHotelLayoutIndexRoute: typeof LayoutHotelHotelLayoutIndexRoute
+}
+
+const LayoutHotelHotelLayoutRouteChildren: LayoutHotelHotelLayoutRouteChildren =
+  {
+    LayoutHotelHotelLayoutAmenitiesRoute: LayoutHotelHotelLayoutAmenitiesRoute,
+    LayoutHotelHotelLayoutReviewsRoute: LayoutHotelHotelLayoutReviewsRoute,
+    LayoutHotelHotelLayoutRulesRoute: LayoutHotelHotelLayoutRulesRoute,
+    LayoutHotelHotelLayoutIndexRoute: LayoutHotelHotelLayoutIndexRoute,
+  }
+
+const LayoutHotelHotelLayoutRouteWithChildren =
+  LayoutHotelHotelLayoutRoute._addFileChildren(
+    LayoutHotelHotelLayoutRouteChildren,
+  )
+
+interface LayoutHotelRouteChildren {
+  LayoutHotelHotelLayoutRoute: typeof LayoutHotelHotelLayoutRouteWithChildren
+}
+
+const LayoutHotelRouteChildren: LayoutHotelRouteChildren = {
+  LayoutHotelHotelLayoutRoute: LayoutHotelHotelLayoutRouteWithChildren,
+}
+
+const LayoutHotelRouteWithChildren = LayoutHotelRoute._addFileChildren(
+  LayoutHotelRouteChildren,
+)
+
+interface LayoutPaymentsPaymentsLayoutRouteChildren {
+  LayoutPaymentsPaymentsLayoutIndexRoute: typeof LayoutPaymentsPaymentsLayoutIndexRoute
+}
+
+const LayoutPaymentsPaymentsLayoutRouteChildren: LayoutPaymentsPaymentsLayoutRouteChildren =
+  {
+    LayoutPaymentsPaymentsLayoutIndexRoute:
+      LayoutPaymentsPaymentsLayoutIndexRoute,
+  }
+
+const LayoutPaymentsPaymentsLayoutRouteWithChildren =
+  LayoutPaymentsPaymentsLayoutRoute._addFileChildren(
+    LayoutPaymentsPaymentsLayoutRouteChildren,
+  )
+
+interface LayoutPaymentsRouteChildren {
+  LayoutPaymentsPaymentsLayoutRoute: typeof LayoutPaymentsPaymentsLayoutRouteWithChildren
+}
+
+const LayoutPaymentsRouteChildren: LayoutPaymentsRouteChildren = {
+  LayoutPaymentsPaymentsLayoutRoute:
+    LayoutPaymentsPaymentsLayoutRouteWithChildren,
+}
+
+const LayoutPaymentsRouteWithChildren = LayoutPaymentsRoute._addFileChildren(
+  LayoutPaymentsRouteChildren,
+)
+
 interface LayoutRouteChildren {
+  LayoutAvailabilityPricesRoute: typeof LayoutAvailabilityPricesRoute
+  LayoutReservationsRoute: typeof LayoutReservationsRoute
+  LayoutRoomsRoute: typeof LayoutRoomsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutHotelRoute: typeof LayoutHotelRouteWithChildren
+  LayoutPaymentsRoute: typeof LayoutPaymentsRouteWithChildren
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAvailabilityPricesRoute: LayoutAvailabilityPricesRoute,
+  LayoutReservationsRoute: LayoutReservationsRoute,
+  LayoutRoomsRoute: LayoutRoomsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutHotelRoute: LayoutHotelRouteWithChildren,
+  LayoutPaymentsRoute: LayoutPaymentsRouteWithChildren,
 }
 
 const LayoutRouteWithChildren =
@@ -63,25 +310,91 @@ const LayoutRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   "": typeof LayoutRouteWithChildren
+  "/availability-prices": typeof LayoutAvailabilityPricesRoute
+  "/reservations": typeof LayoutReservationsRoute
+  "/rooms": typeof LayoutRoomsRoute
   "/": typeof LayoutIndexRoute
+  "/hotel": typeof LayoutHotelHotelLayoutRouteWithChildren
+  "/payments": typeof LayoutPaymentsPaymentsLayoutRouteWithChildren
+  "/hotel/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
+  "/hotel/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
+  "/hotel/rules": typeof LayoutHotelHotelLayoutRulesRoute
+  "/hotel/": typeof LayoutHotelHotelLayoutIndexRoute
+  "/payments/": typeof LayoutPaymentsPaymentsLayoutIndexRoute
 }
 
 export interface FileRoutesByTo {
+  "/availability-prices": typeof LayoutAvailabilityPricesRoute
+  "/reservations": typeof LayoutReservationsRoute
+  "/rooms": typeof LayoutRoomsRoute
   "/": typeof LayoutIndexRoute
+  "/hotel": typeof LayoutHotelHotelLayoutIndexRoute
+  "/payments": typeof LayoutPaymentsPaymentsLayoutIndexRoute
+  "/hotel/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
+  "/hotel/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
+  "/hotel/rules": typeof LayoutHotelHotelLayoutRulesRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   "/_layout": typeof LayoutRouteWithChildren
+  "/_layout/availability-prices": typeof LayoutAvailabilityPricesRoute
+  "/_layout/reservations": typeof LayoutReservationsRoute
+  "/_layout/rooms": typeof LayoutRoomsRoute
   "/_layout/": typeof LayoutIndexRoute
+  "/_layout/hotel": typeof LayoutHotelRouteWithChildren
+  "/_layout/hotel/_hotel-layout": typeof LayoutHotelHotelLayoutRouteWithChildren
+  "/_layout/payments": typeof LayoutPaymentsRouteWithChildren
+  "/_layout/payments/_payments-layout": typeof LayoutPaymentsPaymentsLayoutRouteWithChildren
+  "/_layout/hotel/_hotel-layout/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
+  "/_layout/hotel/_hotel-layout/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
+  "/_layout/hotel/_hotel-layout/rules": typeof LayoutHotelHotelLayoutRulesRoute
+  "/_layout/hotel/_hotel-layout/": typeof LayoutHotelHotelLayoutIndexRoute
+  "/_layout/payments/_payments-layout/": typeof LayoutPaymentsPaymentsLayoutIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "" | "/"
+  fullPaths:
+    | ""
+    | "/availability-prices"
+    | "/reservations"
+    | "/rooms"
+    | "/"
+    | "/hotel"
+    | "/payments"
+    | "/hotel/amenities"
+    | "/hotel/reviews"
+    | "/hotel/rules"
+    | "/hotel/"
+    | "/payments/"
   fileRoutesByTo: FileRoutesByTo
-  to: "/"
-  id: "__root__" | "/_layout" | "/_layout/"
+  to:
+    | "/availability-prices"
+    | "/reservations"
+    | "/rooms"
+    | "/"
+    | "/hotel"
+    | "/payments"
+    | "/hotel/amenities"
+    | "/hotel/reviews"
+    | "/hotel/rules"
+  id:
+    | "__root__"
+    | "/_layout"
+    | "/_layout/availability-prices"
+    | "/_layout/reservations"
+    | "/_layout/rooms"
+    | "/_layout/"
+    | "/_layout/hotel"
+    | "/_layout/hotel/_hotel-layout"
+    | "/_layout/payments"
+    | "/_layout/payments/_payments-layout"
+    | "/_layout/hotel/_hotel-layout/amenities"
+    | "/_layout/hotel/_hotel-layout/reviews"
+    | "/_layout/hotel/_hotel-layout/rules"
+    | "/_layout/hotel/_hotel-layout/"
+    | "/_layout/payments/_payments-layout/"
   fileRoutesById: FileRoutesById
 }
 
@@ -109,12 +422,80 @@ export const routeTree = rootRoute
     "/_layout": {
       "filePath": "_layout.tsx",
       "children": [
-        "/_layout/"
+        "/_layout/availability-prices",
+        "/_layout/reservations",
+        "/_layout/rooms",
+        "/_layout/",
+        "/_layout/hotel",
+        "/_layout/payments"
       ]
+    },
+    "/_layout/availability-prices": {
+      "filePath": "_layout/availability-prices.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/reservations": {
+      "filePath": "_layout/reservations.tsx",
+      "parent": "/_layout"
+    },
+    "/_layout/rooms": {
+      "filePath": "_layout/rooms.tsx",
+      "parent": "/_layout"
     },
     "/_layout/": {
       "filePath": "_layout/index.tsx",
       "parent": "/_layout"
+    },
+    "/_layout/hotel": {
+      "filePath": "_layout/hotel",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/hotel/_hotel-layout"
+      ]
+    },
+    "/_layout/hotel/_hotel-layout": {
+      "filePath": "_layout/hotel/_hotel-layout.tsx",
+      "parent": "/_layout/hotel",
+      "children": [
+        "/_layout/hotel/_hotel-layout/amenities",
+        "/_layout/hotel/_hotel-layout/reviews",
+        "/_layout/hotel/_hotel-layout/rules",
+        "/_layout/hotel/_hotel-layout/"
+      ]
+    },
+    "/_layout/payments": {
+      "filePath": "_layout/payments",
+      "parent": "/_layout",
+      "children": [
+        "/_layout/payments/_payments-layout"
+      ]
+    },
+    "/_layout/payments/_payments-layout": {
+      "filePath": "_layout/payments/_payments-layout.tsx",
+      "parent": "/_layout/payments",
+      "children": [
+        "/_layout/payments/_payments-layout/"
+      ]
+    },
+    "/_layout/hotel/_hotel-layout/amenities": {
+      "filePath": "_layout/hotel/_hotel-layout/amenities.tsx",
+      "parent": "/_layout/hotel/_hotel-layout"
+    },
+    "/_layout/hotel/_hotel-layout/reviews": {
+      "filePath": "_layout/hotel/_hotel-layout/reviews.tsx",
+      "parent": "/_layout/hotel/_hotel-layout"
+    },
+    "/_layout/hotel/_hotel-layout/rules": {
+      "filePath": "_layout/hotel/_hotel-layout/rules.tsx",
+      "parent": "/_layout/hotel/_hotel-layout"
+    },
+    "/_layout/hotel/_hotel-layout/": {
+      "filePath": "_layout/hotel/_hotel-layout/index.tsx",
+      "parent": "/_layout/hotel/_hotel-layout"
+    },
+    "/_layout/payments/_payments-layout/": {
+      "filePath": "_layout/payments/_payments-layout/index.tsx",
+      "parent": "/_layout/payments/_payments-layout"
     }
   }
 }

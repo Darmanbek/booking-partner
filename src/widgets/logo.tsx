@@ -1,3 +1,4 @@
+import { useResponsive } from "antd-style"
 import Image from "antd/es/image"
 import Space, { type SpaceProps } from "antd/es/space"
 import Title, { type TitleProps } from "antd/es/typography/Title"
@@ -9,6 +10,8 @@ interface LogoProps extends SpaceProps {
 }
 
 const Logo: FC<LogoProps> = ({ titleProps, collapsed, ...props }) => {
+	const { sm } = useResponsive()
+
 	return (
 		<Space {...props}>
 			<Image
@@ -21,7 +24,7 @@ const Logo: FC<LogoProps> = ({ titleProps, collapsed, ...props }) => {
 			/>
 			{collapsed ? null : (
 				<Title
-					level={3}
+					level={sm ? 3 : 4}
 					style={{
 						whiteSpace: "nowrap",
 						textOverflow: "ellipsis",

@@ -8,7 +8,7 @@ import {
 	UserOutlined,
 	VideoCameraOutlined
 } from "@ant-design/icons"
-import { Flex } from "antd"
+import Flex from "antd/es/flex"
 import Menu, { type MenuProps } from "antd/es/menu"
 import { createElement, type FC } from "react"
 import { useToken } from "src/shared/hooks"

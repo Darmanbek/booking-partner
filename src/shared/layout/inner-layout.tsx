@@ -5,9 +5,7 @@ const InnerLayout: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<Layout
 			style={{
-				height: "100vh",
-				overflowX: "hidden",
-				overflowY: "auto"
+				minHeight: "100vh"
 			}}
 		>
 			{children}
