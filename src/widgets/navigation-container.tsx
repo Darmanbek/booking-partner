@@ -16,7 +16,7 @@ const NavigationContainer: FC<NavigationContainerProps> = ({
 	children,
 	...props
 }) => {
-	const { md } = useResponsive()
+	const { md = true } = useResponsive()
 	const { pathname } = useLocation()
 	const navigate = useNavigate()
 
