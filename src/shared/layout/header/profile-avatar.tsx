@@ -1,13 +1,42 @@
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons"
+import {
+	LoadingOutlined,
+	LogoutOutlined,
+	UserOutlined
+} from "@ant-design/icons"
+import { useNavigate } from "@tanstack/react-router"
 import Avatar from "antd/es/avatar"
 import Flex from "antd/es/flex"
 import Menu from "antd/es/menu"
 import Popover from "antd/es/popover"
 import Space from "antd/es/space"
 import Typography from "antd/es/typography"
-import { type FC } from "react"
+import { type FC, useEffect } from "react"
+import { useGetMeQuery, useLogoutMutation } from "src/services/partners"
+import { useAuth } from "src/shared/hooks"
+import { formatPhone } from "src/shared/utils"
 
 const ProfileAvatar: FC = () => {
+	const navigate = useNavigate()
+	const auth = useAuth()
+	const { data: profile, isLoading } = useGetMeQuery()
+
+	const { mutate: logout, isPending, isSuccess } = useLogoutMutation()
+
+	const onSelectMenu = (key: string) => {
+		if (key === "/logout") {
+			logout()
+			return
+		}
+		navigate({
+			to: key
+		})
+	}
+
+	useEffect(() => {
+		if (isSuccess) {
+			auth.logout()
+		}
+	}, [auth, isSuccess])
 	return (
 		<>
 			<Popover
@@ -16,7 +45,7 @@ const ProfileAvatar: FC = () => {
 				arrow={false}
 				styles={{
 					root: {
-						width: 200
+						width: 220
 					}
 				}}
 				content={
@@ -24,13 +53,20 @@ const ProfileAvatar: FC = () => {
 						<Space>
 							<Avatar icon={<UserOutlined />} />
 							<Flex vertical={true}>
-								<Typography.Text>Admin</Typography.Text>
+								<Typography.Text>
+									{isLoading
+										? ""
+										: profile
+											? `${profile.data.first_name} ${profile.data.last_name}`
+											: ""}
+								</Typography.Text>
 								<Typography.Text type={"secondary"} style={{ fontSize: 12 }}>
-									+998 90 123 45 67
+									{formatPhone(profile?.data?.phone_number)}
 								</Typography.Text>
 							</Flex>
 						</Space>
 						<Menu
+							onSelect={(item) => onSelectMenu(item.key)}
 							items={[
 								{
 									type: "divider",
@@ -41,13 +77,17 @@ const ProfileAvatar: FC = () => {
 								{
 									key: "/profile",
 									icon: <UserOutlined />,
-									label: "Profile"
+									label: "Профиль"
 								},
 								{
 									key: "/logout",
 									danger: true,
-									icon: <LogoutOutlined />,
-									label: "Logout"
+									icon: isPending ? (
+										<LoadingOutlined spin={true} />
+									) : (
+										<LogoutOutlined />
+									),
+									label: "Выйти"
 								}
 							]}
 						/>
@@ -55,8 +95,18 @@ const ProfileAvatar: FC = () => {
 				}
 			>
 				<Space style={{ cursor: "pointer" }}>
-					<Avatar icon={<UserOutlined />} />
-					<Typography.Text>Admin</Typography.Text>
+					<Avatar
+						icon={
+							isLoading ? <LoadingOutlined spin={true} /> : <UserOutlined />
+						}
+					/>
+					<Typography.Text>
+						{isLoading
+							? ""
+							: profile
+								? `${profile.data.first_name} ${profile.data.last_name}`
+								: ""}
+					</Typography.Text>
 				</Space>
 			</Popover>
 		</>

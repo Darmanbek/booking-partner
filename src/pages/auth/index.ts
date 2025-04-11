@@ -1,3 +1,6 @@
 export * from "./layout/auth-layout"
+export * from "./hooks/use-verify"
+export * from "./context/verify-context"
 export { Login as LoginPage } from "./ui/login"
 export { Register as RegisterPage } from "./ui/register"
+export { Verify as VerifyPage } from "./ui/verify"

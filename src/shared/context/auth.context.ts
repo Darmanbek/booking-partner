@@ -1,8 +1,9 @@
 import { createContext } from "react"
+import { Tokens } from "src/services/shared"
 
 export type AuthContextValues = {
 	isAuth: boolean
-	login: (token: string, remember?: boolean) => void
+	login: (token: Tokens, remember?: boolean) => void
 	logout: () => void
 }
 
