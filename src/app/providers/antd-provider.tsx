@@ -34,6 +34,11 @@ const AntdProvider: FC<PropsWithChildren> = ({ children }) => {
 				form={{
 					requiredMark: false
 				}}
+				inputNumber={{
+					style: {
+						width: "100%"
+					}
+				}}
 				menu={{
 					style: {
 						borderRight: 0

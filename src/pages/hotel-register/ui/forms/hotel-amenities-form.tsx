@@ -1,9 +1,10 @@
-import { Collapse, Form, Radio, Space } from "antd"
+import { Card, Collapse, Form, Radio, Space, Typography } from "antd"
 import { type FC, useEffect, useMemo } from "react"
 import { useHotelRegister } from "src/pages/hotel-register/hooks"
 import { useGetAmenitiesQuery } from "src/services/amenities"
 import { useTranslation } from "src/shared/hooks"
-import { Card, Title } from "src/shared/ui"
+
+const { Title } = Typography
 
 const HotelAmenitiesForm: FC = () => {
 	const { form, onFinish } = useHotelRegister()

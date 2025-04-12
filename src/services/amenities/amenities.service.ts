@@ -12,8 +12,21 @@ import type {
 } from "./amenities.types"
 
 class AmenitiesService {
-	get = async (params: GetParams = {}): Promise<ResponseData<Amenity>> => {
-		const response = await api.get(`/hotel-amenities`, { params })
+	get = async (
+		type: "hotel" | "room" = "hotel",
+		params: GetParams = {}
+	): Promise<ResponseData<Amenity>> => {
+		const response = await api.get(`/${type}-amenities`, { params })
+		return response.data
+	}
+
+	getByHotel = async (
+		hotelSlug: ParamId,
+		params: GetParams = {}
+	): Promise<ResponseData<Amenity>> => {
+		const response = await api.get(`/hotels/${hotelSlug}/amenities`, {
+			params
+		})
 		return response.data
 	}
 
@@ -25,7 +38,7 @@ class AmenitiesService {
 	}
 
 	edit = async (
-		form: Record<string, unknown>
+		form: HotelAmenityChange
 	): Promise<ResponseSingleData<Amenity>> => {
 		const response = await api.put(
 			`/hotel-amenities/categories/${form.id}`,

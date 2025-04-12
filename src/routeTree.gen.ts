@@ -17,12 +17,13 @@ import { Route as LayoutImport } from "./routes/_layout"
 import { Route as LayoutIndexImport } from "./routes/_layout/index"
 import { Route as HotelRegisterHotelRegisterLayoutImport } from "./routes/hotel-register/_hotel-register-layout"
 import { Route as AuthAuthLayoutImport } from "./routes/auth/_auth-layout"
-import { Route as LayoutRoomsImport } from "./routes/_layout/rooms"
 import { Route as LayoutOrdersImport } from "./routes/_layout/orders"
 import { Route as LayoutAvailabilityPricesImport } from "./routes/_layout/availability-prices"
 import { Route as HotelRegisterHotelRegisterLayoutIndexImport } from "./routes/hotel-register/_hotel-register-layout/index"
+import { Route as LayoutRoomsIndexImport } from "./routes/_layout/rooms/index"
 import { Route as AuthAuthLayoutRegisterImport } from "./routes/auth/_auth-layout/register"
 import { Route as AuthAuthLayoutLoginImport } from "./routes/auth/_auth-layout/login"
+import { Route as LayoutRoomsNewImport } from "./routes/_layout/rooms/new"
 import { Route as LayoutPaymentsPaymentsLayoutImport } from "./routes/_layout/payments/_payments-layout"
 import { Route as LayoutHotelHotelLayoutImport } from "./routes/_layout/hotel/_hotel-layout"
 import { Route as LayoutPaymentsPaymentsLayoutIndexImport } from "./routes/_layout/payments/_payments-layout/index"
@@ -86,12 +87,6 @@ const AuthAuthLayoutRoute = AuthAuthLayoutImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const LayoutRoomsRoute = LayoutRoomsImport.update({
-  id: "/rooms",
-  path: "/rooms",
-  getParentRoute: () => LayoutRoute,
-} as any)
-
 const LayoutOrdersRoute = LayoutOrdersImport.update({
   id: "/orders",
   path: "/orders",
@@ -111,6 +106,12 @@ const HotelRegisterHotelRegisterLayoutIndexRoute =
     getParentRoute: () => HotelRegisterHotelRegisterLayoutRoute,
   } as any)
 
+const LayoutRoomsIndexRoute = LayoutRoomsIndexImport.update({
+  id: "/rooms/",
+  path: "/rooms/",
+  getParentRoute: () => LayoutRoute,
+} as any)
+
 const AuthAuthLayoutRegisterRoute = AuthAuthLayoutRegisterImport.update({
   id: "/register",
   path: "/register",
@@ -121,6 +122,12 @@ const AuthAuthLayoutLoginRoute = AuthAuthLayoutLoginImport.update({
   id: "/login",
   path: "/login",
   getParentRoute: () => AuthAuthLayoutRoute,
+} as any)
+
+const LayoutRoomsNewRoute = LayoutRoomsNewImport.update({
+  id: "/rooms/new",
+  path: "/rooms/new",
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const LayoutPaymentsPaymentsLayoutRoute =
@@ -194,13 +201,6 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutOrdersImport
       parentRoute: typeof LayoutImport
     }
-    "/_layout/rooms": {
-      id: "/_layout/rooms"
-      path: "/rooms"
-      fullPath: "/rooms"
-      preLoaderRoute: typeof LayoutRoomsImport
-      parentRoute: typeof LayoutImport
-    }
     "/auth": {
       id: "/auth"
       path: "/auth"
@@ -264,6 +264,13 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutPaymentsPaymentsLayoutImport
       parentRoute: typeof LayoutPaymentsRoute
     }
+    "/_layout/rooms/new": {
+      id: "/_layout/rooms/new"
+      path: "/rooms/new"
+      fullPath: "/rooms/new"
+      preLoaderRoute: typeof LayoutRoomsNewImport
+      parentRoute: typeof LayoutImport
+    }
     "/auth/_auth-layout/login": {
       id: "/auth/_auth-layout/login"
       path: "/login"
@@ -277,6 +284,13 @@ declare module "@tanstack/react-router" {
       fullPath: "/auth/register"
       preLoaderRoute: typeof AuthAuthLayoutRegisterImport
       parentRoute: typeof AuthAuthLayoutImport
+    }
+    "/_layout/rooms/": {
+      id: "/_layout/rooms/"
+      path: "/rooms"
+      fullPath: "/rooms"
+      preLoaderRoute: typeof LayoutRoomsIndexImport
+      parentRoute: typeof LayoutImport
     }
     "/hotel-register/_hotel-register-layout/": {
       id: "/hotel-register/_hotel-register-layout/"
@@ -388,19 +402,21 @@ const LayoutPaymentsRouteWithChildren = LayoutPaymentsRoute._addFileChildren(
 interface LayoutRouteChildren {
   LayoutAvailabilityPricesRoute: typeof LayoutAvailabilityPricesRoute
   LayoutOrdersRoute: typeof LayoutOrdersRoute
-  LayoutRoomsRoute: typeof LayoutRoomsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutHotelRoute: typeof LayoutHotelRouteWithChildren
   LayoutPaymentsRoute: typeof LayoutPaymentsRouteWithChildren
+  LayoutRoomsNewRoute: typeof LayoutRoomsNewRoute
+  LayoutRoomsIndexRoute: typeof LayoutRoomsIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAvailabilityPricesRoute: LayoutAvailabilityPricesRoute,
   LayoutOrdersRoute: LayoutOrdersRoute,
-  LayoutRoomsRoute: LayoutRoomsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutHotelRoute: LayoutHotelRouteWithChildren,
   LayoutPaymentsRoute: LayoutPaymentsRouteWithChildren,
+  LayoutRoomsNewRoute: LayoutRoomsNewRoute,
+  LayoutRoomsIndexRoute: LayoutRoomsIndexRoute,
 }
 
 const LayoutRouteWithChildren =
@@ -462,14 +478,15 @@ export interface FileRoutesByFullPath {
   "": typeof LayoutRouteWithChildren
   "/availability-prices": typeof LayoutAvailabilityPricesRoute
   "/orders": typeof LayoutOrdersRoute
-  "/rooms": typeof LayoutRoomsRoute
   "/auth": typeof AuthAuthLayoutRouteWithChildren
   "/hotel-register": typeof HotelRegisterHotelRegisterLayoutRouteWithChildren
   "/": typeof LayoutIndexRoute
   "/hotel": typeof LayoutHotelHotelLayoutRouteWithChildren
   "/payments": typeof LayoutPaymentsPaymentsLayoutRouteWithChildren
+  "/rooms/new": typeof LayoutRoomsNewRoute
   "/auth/login": typeof AuthAuthLayoutLoginRoute
   "/auth/register": typeof AuthAuthLayoutRegisterRoute
+  "/rooms": typeof LayoutRoomsIndexRoute
   "/hotel-register/": typeof HotelRegisterHotelRegisterLayoutIndexRoute
   "/hotel/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
   "/hotel/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
@@ -481,14 +498,15 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/availability-prices": typeof LayoutAvailabilityPricesRoute
   "/orders": typeof LayoutOrdersRoute
-  "/rooms": typeof LayoutRoomsRoute
   "/auth": typeof AuthAuthLayoutRouteWithChildren
   "/hotel-register": typeof HotelRegisterHotelRegisterLayoutIndexRoute
   "/": typeof LayoutIndexRoute
   "/hotel": typeof LayoutHotelHotelLayoutIndexRoute
   "/payments": typeof LayoutPaymentsPaymentsLayoutIndexRoute
+  "/rooms/new": typeof LayoutRoomsNewRoute
   "/auth/login": typeof AuthAuthLayoutLoginRoute
   "/auth/register": typeof AuthAuthLayoutRegisterRoute
+  "/rooms": typeof LayoutRoomsIndexRoute
   "/hotel/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
   "/hotel/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
   "/hotel/rules": typeof LayoutHotelHotelLayoutRulesRoute
@@ -499,7 +517,6 @@ export interface FileRoutesById {
   "/_layout": typeof LayoutRouteWithChildren
   "/_layout/availability-prices": typeof LayoutAvailabilityPricesRoute
   "/_layout/orders": typeof LayoutOrdersRoute
-  "/_layout/rooms": typeof LayoutRoomsRoute
   "/auth": typeof AuthRouteWithChildren
   "/auth/_auth-layout": typeof AuthAuthLayoutRouteWithChildren
   "/hotel-register": typeof HotelRegisterRouteWithChildren
@@ -509,8 +526,10 @@ export interface FileRoutesById {
   "/_layout/hotel/_hotel-layout": typeof LayoutHotelHotelLayoutRouteWithChildren
   "/_layout/payments": typeof LayoutPaymentsRouteWithChildren
   "/_layout/payments/_payments-layout": typeof LayoutPaymentsPaymentsLayoutRouteWithChildren
+  "/_layout/rooms/new": typeof LayoutRoomsNewRoute
   "/auth/_auth-layout/login": typeof AuthAuthLayoutLoginRoute
   "/auth/_auth-layout/register": typeof AuthAuthLayoutRegisterRoute
+  "/_layout/rooms/": typeof LayoutRoomsIndexRoute
   "/hotel-register/_hotel-register-layout/": typeof HotelRegisterHotelRegisterLayoutIndexRoute
   "/_layout/hotel/_hotel-layout/amenities": typeof LayoutHotelHotelLayoutAmenitiesRoute
   "/_layout/hotel/_hotel-layout/reviews": typeof LayoutHotelHotelLayoutReviewsRoute
@@ -525,14 +544,15 @@ export interface FileRouteTypes {
     | ""
     | "/availability-prices"
     | "/orders"
-    | "/rooms"
     | "/auth"
     | "/hotel-register"
     | "/"
     | "/hotel"
     | "/payments"
+    | "/rooms/new"
     | "/auth/login"
     | "/auth/register"
+    | "/rooms"
     | "/hotel-register/"
     | "/hotel/amenities"
     | "/hotel/reviews"
@@ -543,14 +563,15 @@ export interface FileRouteTypes {
   to:
     | "/availability-prices"
     | "/orders"
-    | "/rooms"
     | "/auth"
     | "/hotel-register"
     | "/"
     | "/hotel"
     | "/payments"
+    | "/rooms/new"
     | "/auth/login"
     | "/auth/register"
+    | "/rooms"
     | "/hotel/amenities"
     | "/hotel/reviews"
     | "/hotel/rules"
@@ -559,7 +580,6 @@ export interface FileRouteTypes {
     | "/_layout"
     | "/_layout/availability-prices"
     | "/_layout/orders"
-    | "/_layout/rooms"
     | "/auth"
     | "/auth/_auth-layout"
     | "/hotel-register"
@@ -569,8 +589,10 @@ export interface FileRouteTypes {
     | "/_layout/hotel/_hotel-layout"
     | "/_layout/payments"
     | "/_layout/payments/_payments-layout"
+    | "/_layout/rooms/new"
     | "/auth/_auth-layout/login"
     | "/auth/_auth-layout/register"
+    | "/_layout/rooms/"
     | "/hotel-register/_hotel-register-layout/"
     | "/_layout/hotel/_hotel-layout/amenities"
     | "/_layout/hotel/_hotel-layout/reviews"
@@ -612,10 +634,11 @@ export const routeTree = rootRoute
       "children": [
         "/_layout/availability-prices",
         "/_layout/orders",
-        "/_layout/rooms",
         "/_layout/",
         "/_layout/hotel",
-        "/_layout/payments"
+        "/_layout/payments",
+        "/_layout/rooms/new",
+        "/_layout/rooms/"
       ]
     },
     "/_layout/availability-prices": {
@@ -624,10 +647,6 @@ export const routeTree = rootRoute
     },
     "/_layout/orders": {
       "filePath": "_layout/orders.tsx",
-      "parent": "/_layout"
-    },
-    "/_layout/rooms": {
-      "filePath": "_layout/rooms.tsx",
       "parent": "/_layout"
     },
     "/auth": {
@@ -692,6 +711,10 @@ export const routeTree = rootRoute
         "/_layout/payments/_payments-layout/"
       ]
     },
+    "/_layout/rooms/new": {
+      "filePath": "_layout/rooms/new.tsx",
+      "parent": "/_layout"
+    },
     "/auth/_auth-layout/login": {
       "filePath": "auth/_auth-layout/login.tsx",
       "parent": "/auth/_auth-layout"
@@ -699,6 +722,10 @@ export const routeTree = rootRoute
     "/auth/_auth-layout/register": {
       "filePath": "auth/_auth-layout/register.tsx",
       "parent": "/auth/_auth-layout"
+    },
+    "/_layout/rooms/": {
+      "filePath": "_layout/rooms/index.tsx",
+      "parent": "/_layout"
     },
     "/hotel-register/_hotel-register-layout/": {
       "filePath": "hotel-register/_hotel-register-layout/index.tsx",

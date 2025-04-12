@@ -1,9 +1,10 @@
 import { type FC } from "react"
+import { OrdersTable } from "./tables"
 
 const Orders: FC = () => {
 	return (
 		<>
-			<h1>Orders</h1>
+			<OrdersTable />
 		</>
 	)
 }

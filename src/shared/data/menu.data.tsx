@@ -1,5 +1,4 @@
 import {
-	DollarOutlined,
 	HomeOutlined,
 	InboxOutlined,
 	InsertRowAboveOutlined,
@@ -29,10 +28,5 @@ export const menuData: MenuItem[] = [
 		key: "/rooms",
 		icon: <InboxOutlined />,
 		label: "Номера"
-	},
-	{
-		key: "/payments",
-		icon: <DollarOutlined />,
-		label: "Счета"
 	}
 ]

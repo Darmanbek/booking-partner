@@ -1,8 +1,7 @@
-import { DatePicker, Form, Input } from "antd"
+import { Card, Col, DatePicker, Form, Input, Row } from "antd"
 import { type FC } from "react"
 import { useHotelRegister } from "src/pages/hotel-register/hooks"
 import type { HotelChange } from "src/services/hotels"
-import { Card, Col, Row } from "src/shared/ui"
 
 const HotelInfoForGuestForm: FC = () => {
 	const { form, onFinish } = useHotelRegister()

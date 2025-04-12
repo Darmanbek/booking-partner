@@ -1,10 +1,11 @@
 import { MoreOutlined, RetweetOutlined, TeamOutlined } from "@ant-design/icons"
-import { Button, Card, Flex, Image, List, Space } from "antd"
+import { Button, Card, Flex, Image, List, Space, Typography } from "antd"
 import { type FC } from "react"
 import type { Room } from "src/services/rooms"
 import { useToken, useTranslation } from "src/shared/hooks"
-import { Text, Title } from "src/shared/ui"
 import { formatPriceWithCurrency } from "src/shared/utils/format.utils"
+
+const { Text, Title } = Typography
 
 interface HotelListItemProps {
 	data?: Room

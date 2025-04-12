@@ -7,6 +7,7 @@ export type Amenity = {
 }
 
 export type HotelAmenity = {
+	key: number
 	id: number
 	name: TranslateName
 	is_popular: boolean
@@ -19,6 +20,8 @@ export type AmenityChange = {
 }
 
 export type HotelAmenityChange = {
+	id?: number
+	slug?: string
 	name: string
 	is_popular: boolean
 	payment_type: string

@@ -1,9 +1,10 @@
+import { Card } from "antd"
 import { type FC } from "react"
 
 const HotelRules: FC = () => {
 	return (
 		<>
-			<h1>HotelRules</h1>
+			<Card title={"Условия"}></Card>
 		</>
 	)
 }

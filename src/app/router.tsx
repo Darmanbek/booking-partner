@@ -1,6 +1,7 @@
 import { createRouter } from "@tanstack/react-router"
 import { routeTree } from "src/routeTree.gen"
 import { NotFound } from "src/shared/layout"
+import { ErrorBoundary } from "src/shared/layout/error-boundary"
 import { Loader } from "src/widgets/loader"
 // Import the generated route tree
 
@@ -14,7 +15,8 @@ export const router = createRouter({
 	defaultPreloadStaleTime: 0,
 	scrollRestoration: true,
 	defaultPendingComponent: () => <Loader loading={true} />,
-	defaultNotFoundComponent: NotFound
+	defaultNotFoundComponent: NotFound,
+	defaultErrorComponent: ErrorBoundary
 })
 
 // Register the router instance for type safety

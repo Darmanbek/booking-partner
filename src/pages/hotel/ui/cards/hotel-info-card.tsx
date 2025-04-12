@@ -1,6 +1,6 @@
 import { EditOutlined, EnvironmentOutlined } from "@ant-design/icons"
+import { Alert, Button, Card, Descriptions, Flex, Rate } from "antd"
 import { type FC } from "react"
-import { Alert, Button, Card, Descriptions, Flex, Rate } from "src/shared/ui"
 
 const HotelInfoCard: FC = () => {
 	return (

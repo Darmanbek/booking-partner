@@ -1,11 +1,23 @@
 import { PhoneOutlined } from "@ant-design/icons"
 import { Link, useNavigate } from "@tanstack/react-router"
-import { Checkbox, Divider, Form, type FormProps } from "antd"
+import {
+	Button,
+	Card,
+	Checkbox,
+	Divider,
+	Flex,
+	Form,
+	type FormProps,
+	Input,
+	Typography
+} from "antd"
 import { type FC, useEffect } from "react"
 import { type LoginChange, useLoginMutation } from "src/services/partners"
 import { useAuth } from "src/shared/hooks"
-import { Button, Card, Flex, Input, InputPassword, Title } from "src/shared/ui"
 import { formatFormPhone } from "src/shared/utils"
+
+const { Password: InputPassword } = Input
+const { Title } = Typography
 
 const Login: FC = () => {
 	const [form] = Form.useForm<LoginChange>()

@@ -1,4 +1,7 @@
-import { useQueryClient } from "@tanstack/react-query"
+import {
+	useQueryClient,
+	useQueryErrorResetBoundary
+} from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 import type { GetParams } from "src/services/shared"
 import { useCrudMutation, useCrudQuery } from "src/shared/api"
@@ -8,6 +11,7 @@ import { partnersService } from "./partners.service"
 const useGetMeQuery = (params: GetParams = {}) => {
 	const auth = useAuth()
 	const queryClient = useQueryClient()
+	const queryErrorResetBoundary = useQueryErrorResetBoundary()
 	const navigate = useNavigate()
 	return useCrudQuery({
 		queryFn: () => partnersService.getMe(params),
@@ -22,6 +26,7 @@ const useGetMeQuery = (params: GetParams = {}) => {
 				replace: true,
 				ignoreBlocker: true
 			})
+			queryErrorResetBoundary.reset()
 		}
 	})
 }

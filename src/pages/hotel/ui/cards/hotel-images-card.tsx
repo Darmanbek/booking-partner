@@ -1,6 +1,6 @@
 import { EditOutlined } from "@ant-design/icons"
+import { Button, Card, Col, Image, Row } from "antd"
 import { type FC } from "react"
-import { Button, Card, Col, Image, Row } from "src/shared/ui"
 
 const HotelImagesCard: FC = () => {
 	return (

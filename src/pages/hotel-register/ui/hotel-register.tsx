@@ -1,9 +1,8 @@
 import { useNavigate } from "@tanstack/react-router"
-import { Form, type FormProps } from "antd"
+import { Button, Flex, Form, type FormProps } from "antd"
 import { type FC, useEffect } from "react"
 import { HotelRegisterContext } from "src/pages/hotel-register/context"
 import { type HotelChange, useCreateHotelsMutation } from "src/services/hotels"
-import { Button, Flex } from "src/shared/ui"
 import { formatCustomDate, formatFormPhone } from "src/shared/utils"
 import {
 	HotelAmenitiesForm,

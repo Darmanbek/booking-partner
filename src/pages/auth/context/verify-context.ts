@@ -6,7 +6,7 @@ export type VerifyContextValues = {
 	phoneNumber: string
 	setPhoneNumber: (phoneNumber: string) => void
 	remember: boolean
-	setRemember: (remember?: boolean) => void
+	setRemember: (remember: boolean) => void
 }
 
 export const VerifyContext = createContext<VerifyContextValues | null>(null)

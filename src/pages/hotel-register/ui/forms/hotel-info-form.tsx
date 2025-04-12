@@ -1,5 +1,5 @@
 import { AimOutlined } from "@ant-design/icons"
-import { Form, Input, Select } from "antd"
+import { Form, Input, Select, Button, Card, Col, Row } from "antd"
 import axios from "axios"
 import L, { type LatLng } from "leaflet"
 import { type FC, useEffect, useRef, useState } from "react"
@@ -9,7 +9,6 @@ import { useGetCategoriesQuery } from "src/services/categories/categories.api"
 import type { HotelChange } from "src/services/hotels"
 import { useGetLocationsQuery } from "src/services/locations"
 import { useTranslation } from "src/shared/hooks"
-import { Button, Card, Col, Row } from "src/shared/ui"
 import { Map, type MapRef } from "src/widgets/map"
 
 function useReverseGeocode(lat: number, lon: number, delay = 500) {

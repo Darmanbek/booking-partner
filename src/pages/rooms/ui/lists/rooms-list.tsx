@@ -1,4 +1,6 @@
-import { List, type ListProps } from "antd"
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons"
+import { useNavigate } from "@tanstack/react-router"
+import { Button, Flex, Input, List, type ListProps } from "antd"
 import { type FC } from "react"
 import { type Room } from "src/services/rooms"
 import { RoomsListItem } from "./rooms-list-item"
@@ -16,9 +18,30 @@ const RoomsList: FC<HotelsListProps> = ({
 		pageSize: 10
 	}
 }) => {
+	const navigate = useNavigate()
+
 	return (
 		<>
 			<List<Room>
+				header={
+					<Flex gap={8} justify={"space-between"}>
+						<Input
+							style={{ maxWidth: "25%" }}
+							prefix={<SearchOutlined />}
+							placeholder={"Поиск..."}
+						/>
+						<Button
+							icon={<PlusOutlined />}
+							onClick={() =>
+								navigate({
+									to: "/rooms/new"
+								})
+							}
+						>
+							Добавить
+						</Button>
+					</Flex>
+				}
 				pagination={pagination}
 				loading={loading}
 				dataSource={data}

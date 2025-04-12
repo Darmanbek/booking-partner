@@ -1,9 +1,9 @@
 import { useNavigate } from "@tanstack/react-router"
+import { Button, Flex, Space } from "antd"
 import Layout from "antd/es/layout"
 import { Content, Footer, Header } from "antd/es/layout/layout"
 import type { FC, PropsWithChildren } from "react"
 import { useToken } from "src/shared/hooks"
-import { Button, Flex, Space } from "src/shared/ui"
 import { Logo } from "src/widgets/logo"
 
 const AuthLayout: FC<PropsWithChildren> = ({ children }) => {

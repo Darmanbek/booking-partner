@@ -8,13 +8,15 @@ import {
 	Flex,
 	Form,
 	type FormProps,
-	Input
+	Input,
+	Typography
 } from "antd"
 import { type FC } from "react"
 import { useVerify } from "src/pages/auth"
 import { type RegisterChange, useRegisterMutation } from "src/services/partners"
-import { Title } from "src/shared/ui"
 import { formatFormPhone } from "src/shared/utils"
+
+const { Title } = Typography
 
 const Register: FC = () => {
 	const [form] = Form.useForm<RegisterChange>()
@@ -32,7 +34,7 @@ const Register: FC = () => {
 			onSuccess: () => {
 				setIsVerify(true)
 				setPhoneNumber(phoneNumber)
-				setRemember(remember)
+				setRemember(!!remember)
 			}
 		})
 	}

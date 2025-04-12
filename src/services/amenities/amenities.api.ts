@@ -1,12 +1,25 @@
 import type { GetParams, ParamId } from "src/services/shared"
 import { useCrudMutation, useCrudQuery } from "src/shared/api"
+import { useAuth } from "src/shared/hooks"
 import { amenitiesService } from "./amenities.service"
 import type { HotelAmenityChange } from "./amenities.types"
 
-const useGetAmenitiesQuery = (params: GetParams = {}) => {
+const useGetAmenitiesQuery = (
+	type: "hotel" | "room" = "hotel",
+	params: GetParams = {}
+) => {
 	return useCrudQuery({
-		queryFn: () => amenitiesService.get(params),
-		queryKey: ["amenities", ...Object.values(params)]
+		queryFn: () => amenitiesService.get(type, params),
+		queryKey: ["amenities", `${type}-amenities`, ...Object.values(params)]
+	})
+}
+
+const useGetHotelAmenitiesQuery = (params: GetParams = {}) => {
+	const { hotelSlug } = useAuth()
+	return useCrudQuery({
+		queryFn: () => amenitiesService.getByHotel(hotelSlug, params),
+		queryKey: ["amenities", hotelSlug, ...Object.values(params)],
+		enabled: !!hotelSlug
 	})
 }
 
@@ -67,6 +80,7 @@ const useDeleteHotelAmenitiesMutation = () => {
 
 export {
 	useGetAmenitiesQuery,
+	useGetHotelAmenitiesQuery,
 	useCreateAmenitiesMutation,
 	useEditAmenitiesMutation,
 	useDeleteAmenitiesMutation,

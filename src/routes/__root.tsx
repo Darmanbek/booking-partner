@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router"
 import type { AuthContextValues } from "src/shared/context"
 
@@ -11,6 +12,7 @@ function RootComponent() {
 	return (
 		<>
 			<Outlet />
+			<ReactQueryDevtools buttonPosition={"bottom-left"} />
 		</>
 	)
 }

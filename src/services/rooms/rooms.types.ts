@@ -19,4 +19,5 @@ export type RoomChange = {
 	room_area: number
 	max_guests: number
 	room_type_id: number
+	amenities: number[] | number[][]
 }
