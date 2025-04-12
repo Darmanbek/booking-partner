@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { Tokens } from "src/services/shared"
+import type { Tokens } from "src/services/shared"
 
 export type AuthContextValues = {
 	isAuth: boolean
@@ -7,4 +7,12 @@ export type AuthContextValues = {
 	logout: () => void
 }
 
+export type HotelContextValues = {
+	hotelSlug: string | null
+	setHotelSlug: (hotelSlug: string) => void
+	hasHotel: boolean
+	setHasHotel: (hasHotel: boolean) => void
+}
+
 export const AuthContext = createContext<AuthContextValues | null>(null)
+export const HotelContext = createContext<HotelContextValues | null>(null)

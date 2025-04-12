@@ -35,8 +35,13 @@ const ProfileAvatar: FC = () => {
 	useEffect(() => {
 		if (isSuccess) {
 			auth.logout()
+			navigate({
+				to: "/auth/login",
+				replace: true,
+				ignoreBlocker: true
+			})
 		}
-	}, [auth, isSuccess])
+	}, [navigate, auth, isSuccess])
 	return (
 		<>
 			<Popover

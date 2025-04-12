@@ -10,7 +10,8 @@ const Menubar: FC = () => {
 
 	const onSelectMenu = (key: string) => {
 		navigate({
-			to: key
+			to: key,
+			ignoreBlocker: true
 		})
 	}
 

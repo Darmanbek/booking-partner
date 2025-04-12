@@ -18,8 +18,11 @@
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
     "js-cookie": "^3.0.5",
+    "leaflet": "^1.9.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-leaflet": "^4.2.1",
+    "react-leaflet-cluster": "^2.1.0",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "@tanstack/router-devtools": "^1.115.2",
     "@tanstack/router-plugin": "^1.115.2",
     "@types/js-cookie": "^3.0.6",
+    "@types/leaflet": "^1.9.17",
     "@types/node": "^22.13.17",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",

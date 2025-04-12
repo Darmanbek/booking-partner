@@ -1,8 +1,7 @@
-import { LoadingOutlined } from "@ant-design/icons"
 import { createRouter } from "@tanstack/react-router"
-import Spin from "antd/es/spin"
 import { routeTree } from "src/routeTree.gen"
 import { NotFound } from "src/shared/layout"
+import { Loader } from "src/widgets/loader"
 // Import the generated route tree
 
 // Create a new router instance
@@ -11,16 +10,10 @@ export const router = createRouter({
 	context: {
 		auth: undefined
 	},
-	defaultPreload: "intent",
+	defaultPreload: "render",
 	defaultPreloadStaleTime: 0,
 	scrollRestoration: true,
-	defaultPendingComponent: () => (
-		<Spin
-			fullscreen={true}
-			spinning={true}
-			indicator={<LoadingOutlined style={{ fontSize: 32, color: "#fff" }} />}
-		/>
-	),
+	defaultPendingComponent: () => <Loader loading={true} />,
 	defaultNotFoundComponent: NotFound
 })
 

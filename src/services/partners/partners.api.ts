@@ -7,15 +7,20 @@ import { partnersService } from "./partners.service"
 
 const useGetMeQuery = (params: GetParams = {}) => {
 	const auth = useAuth()
+	const queryClient = useQueryClient()
 	const navigate = useNavigate()
 	return useCrudQuery({
 		queryFn: () => partnersService.getMe(params),
 		queryKey: ["partners", ...Object.values(params)],
 		onError: () => {
 			auth.logout()
+			queryClient.removeQueries({
+				queryKey: ["partners"]
+			})
 			navigate({
 				to: "/auth/login",
-				replace: true
+				replace: true,
+				ignoreBlocker: true
 			})
 		}
 	})

@@ -1,13 +1,22 @@
-import { Flex, Space } from "antd"
+import { Divider, Flex, Space } from "antd"
 import { Header as LayoutHeader } from "antd/es/layout/layout"
+import Title from "antd/es/typography/Title"
 import { type FC } from "react"
-import { useToken } from "src/shared/hooks"
+import { useGetHotelsQuery } from "src/services/hotels"
+import { useGetMeQuery } from "src/services/partners"
+import { useToken, useTranslation } from "src/shared/hooks"
 import { Logo } from "src/widgets/logo"
 import { BellButton } from "./header/bell-button"
 import { ProfileAvatar } from "./header/profile-avatar"
 
 const Header: FC = () => {
 	const { token } = useToken()
+	const { t } = useTranslation()
+	const { data: profile } = useGetMeQuery()
+	const { data: hotel } = useGetHotelsQuery({
+		has_hotel: profile?.data?.has_hotel
+	})
+
 	return (
 		<LayoutHeader
 			style={{
@@ -19,6 +28,12 @@ const Header: FC = () => {
 			<Flex align={"center"} gap={8} justify={"space-between"}>
 				<Space>
 					<Logo />
+					{hotel && (
+						<>
+							<Divider type={"vertical"} />
+							<Title level={4}>Отель: {t(hotel?.data?.name)}</Title>
+						</>
+					)}
 				</Space>
 
 				<Space>

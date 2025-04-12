@@ -15,6 +15,7 @@ import Row, { type RowProps } from "antd/es/row"
 import Space, { type SpaceProps } from "antd/es/space"
 import Table, { type TableProps } from "antd/es/table"
 import type { ColumnsType } from "antd/es/table/interface"
+import Text, { type TextProps } from "antd/es/typography/Text"
 import Title, { type TitleProps } from "antd/es/typography/Title"
 
 export {
@@ -31,7 +32,8 @@ export {
 	Space,
 	Title,
 	Input,
-	InputPassword
+	InputPassword,
+	Text
 }
 
 export type {
@@ -49,5 +51,6 @@ export type {
 	SpaceProps,
 	TitleProps,
 	InputProps,
-	InputPasswordProps
+	InputPasswordProps,
+	TextProps
 }

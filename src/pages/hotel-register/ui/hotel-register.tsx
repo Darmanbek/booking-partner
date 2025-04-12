@@ -1,5 +1,10 @@
+import { useNavigate } from "@tanstack/react-router"
 import { Form, type FormProps } from "antd"
-import { type FC } from "react"
+import { type FC, useEffect } from "react"
+import { HotelRegisterContext } from "src/pages/hotel-register/context"
+import { type HotelChange, useCreateHotelsMutation } from "src/services/hotels"
+import { Button, Flex } from "src/shared/ui"
+import { formatCustomDate, formatFormPhone } from "src/shared/utils"
 import {
 	HotelAmenitiesForm,
 	HotelInfoForGuestForm,
@@ -7,16 +12,80 @@ import {
 } from "./forms"
 
 const HotelRegister: FC = () => {
-	const [form] = Form.useForm()
+	const [form] = Form.useForm<HotelChange>()
+	const navigate = useNavigate()
 
-	const onFinish: FormProps["onFinish"] = () => {}
+	const {
+		mutate: hotelRegister,
+		isPending,
+		isSuccess
+	} = useCreateHotelsMutation()
 
+	const onFinish: FormProps<HotelChange>["onFinish"] = (values) => {
+		if (values.name) {
+			values.name_ru = values.name
+			values.name_en = values.name
+			values.name_uz = values.name
+			values.name_kk = values.name
+		}
+		if (values.description) {
+			values.description_ru = values.description
+			values.description_en = values.description
+			values.description_uz = values.description
+			values.description_kk = values.description
+		}
+		if (values.check_in) {
+			values.check_in = formatCustomDate(values.check_in, "HH:mm")
+		}
+		if (values.check_out) {
+			values.check_out = formatCustomDate(values.check_out, "HH:mm")
+		}
+		if (values.first_phone_for_guests) {
+			values.first_phone_for_guests = formatFormPhone(
+				values.first_phone_for_guests
+			)
+		}
+		if (values.second_phone_for_guests) {
+			values.second_phone_for_guests = formatFormPhone(
+				values.second_phone_for_guests
+			)
+		}
+		if (values.amenities) {
+			values.amenities = values.amenities.filter(Boolean)
+		}
+		hotelRegister(values)
+	}
+
+	useEffect(() => {
+		if (isSuccess) {
+			navigate({
+				to: "/hotel",
+				replace: true
+			})
+		}
+	})
 	return (
-		<>
-			<HotelInfoForm form={form} onFinish={onFinish} />
-			<HotelAmenitiesForm form={form} onFinish={onFinish} />
-			<HotelInfoForGuestForm form={form} onFinish={onFinish} />
-		</>
+		<HotelRegisterContext.Provider
+			value={{
+				form,
+				onFinish
+			}}
+		>
+			<HotelInfoForm />
+			<HotelAmenitiesForm />
+			<HotelInfoForGuestForm />
+			<Flex justify={"center"}>
+				<Button
+					loading={isPending}
+					disabled={isPending}
+					onClick={form.submit}
+					type={"primary"}
+					size={"large"}
+				>
+					Зарегистрировать
+				</Button>
+			</Flex>
+		</HotelRegisterContext.Provider>
 	)
 }
 

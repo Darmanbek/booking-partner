@@ -29,7 +29,7 @@ const NavigationContainer: FC<NavigationContainerProps> = ({
 					mode={md ? "vertical" : "horizontal"}
 					overflowedIndicator={<MenuOutlined style={{ paddingInline: 16 }} />}
 					style={{ borderRadius: token.borderRadiusLG }}
-					onSelect={(item) => navigate({ to: item.key })}
+					onSelect={(item) => navigate({ to: item.key, ignoreBlocker: true })}
 					{...menuProps}
 				/>
 			</Flex>

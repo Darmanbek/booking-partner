@@ -9,3 +9,9 @@ export type TranslateName = {
 }
 
 export type TranslateKeys = keyof TranslateName
+
+export type ImageFile = {
+	image: string
+	position: number
+	hotel_id: number
+}

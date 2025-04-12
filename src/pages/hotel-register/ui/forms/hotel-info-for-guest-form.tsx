@@ -1,22 +1,12 @@
-import {
-	DatePicker,
-	Form,
-	type FormInstance,
-	type FormProps,
-	Input
-} from "antd"
+import { DatePicker, Form, Input } from "antd"
 import { type FC } from "react"
+import { useHotelRegister } from "src/pages/hotel-register/hooks"
+import type { HotelChange } from "src/services/hotels"
 import { Card, Col, Row } from "src/shared/ui"
 
-interface HotelInfoForGuestFormProps {
-	form: FormInstance
-	onFinish: FormProps["onFinish"]
-}
+const HotelInfoForGuestForm: FC = () => {
+	const { form, onFinish } = useHotelRegister()
 
-const HotelInfoForGuestForm: FC<HotelInfoForGuestFormProps> = ({
-	form,
-	onFinish
-}) => {
 	return (
 		<>
 			<Card title={"Информация для гостя"}>
@@ -30,34 +20,49 @@ const HotelInfoForGuestForm: FC<HotelInfoForGuestFormProps> = ({
 				>
 					<Row gutter={16} style={{ rowGap: 16 }}>
 						<Col xs={24} md={12}>
-							<Form.Item
+							<Form.Item<HotelChange>
 								label={"Телефон номер"}
-								name={"phone_number"}
+								name={"first_phone_for_guests"}
 								rules={[{ required: true }]}
 							>
 								<Input addonBefore={"+998"} />
 							</Form.Item>
 						</Col>
 						<Col xs={24} md={12}>
-							<Form.Item
+							<Form.Item<HotelChange>
+								label={"Дополнительный телефон номер"}
+								help={"(Необязательно)"}
+								name={"second_phone_for_guests"}
+								rules={[{ required: false }]}
+							>
+								<Input addonBefore={"+998"} />
+							</Form.Item>
+						</Col>
+					</Row>
+					<Row gutter={16} style={{ rowGap: 16 }}>
+						<Col xs={24} md={12}>
+							<Form.Item<HotelChange>
 								label={"Email почта"}
-								name={"email"}
+								name={"email_for_guests"}
 								rules={[{ required: true }, { type: "email" }]}
 							>
 								<Input />
 							</Form.Item>
 						</Col>
+						<Col xs={24} md={12}>
+							<Form.Item<HotelChange>
+								label={"Сайт объекта"}
+								name={"site_url"}
+								rules={[{ required: true }, { type: "url" }]}
+							>
+								<Input />
+							</Form.Item>
+						</Col>
 					</Row>
-					<Form.Item
-						label={"Сайт объекта"}
-						name={"site_url"}
-						rules={[{ required: true }, { type: "url" }]}
-					>
-						<Input />
-					</Form.Item>
+
 					<Row gutter={16} style={{ rowGap: 16 }}>
 						<Col xs={24} md={12}>
-							<Form.Item
+							<Form.Item<HotelChange>
 								label={"Время заезда"}
 								name={"check_in"}
 								rules={[{ required: true }]}
@@ -66,7 +71,7 @@ const HotelInfoForGuestForm: FC<HotelInfoForGuestFormProps> = ({
 							</Form.Item>
 						</Col>
 						<Col xs={24} md={12}>
-							<Form.Item
+							<Form.Item<HotelChange>
 								label={"Время выезда"}
 								name={"check_out"}
 								rules={[{ required: true }]}
