@@ -42,7 +42,10 @@ const AvailabilityTable: FC = () => {
 								{
 									room_type: "Отель",
 									base_price: 0,
-									quantity: 0,
+									quantity: rooms.data?.reduce(
+										(total, item) => total + item.quantity,
+										0
+									),
 									room_area: 0,
 									max_guests: 0,
 									room_type_id: 1,
