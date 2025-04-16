@@ -2,7 +2,7 @@ import { AimOutlined, ArrowLeftOutlined } from "@ant-design/icons"
 import { useNavigate } from "@tanstack/react-router"
 import { Button, Card, Col, Form, Input, Row, Select } from "antd"
 import axios from "axios"
-import L, { type LatLng } from "leaflet"
+import { type LatLng } from "leaflet"
 import { type FC, useEffect, useRef, useState } from "react"
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet"
 import { useHotelsRegister } from "src/pages/hotels-register/hooks"
@@ -10,7 +10,7 @@ import { useGetCategoriesQuery } from "src/services/categories/categories.api"
 import type { HotelChange } from "src/services/hotels"
 import { useGetLocationsQuery } from "src/services/locations"
 import { useTranslation } from "src/shared/hooks"
-import { Map, type MapRef } from "src/widgets/map"
+import { Map, type MapRef, RedMarker } from "src/widgets/map"
 
 function useReverseGeocode(lat: number, lon: number, delay = 500) {
 	const [address, setAddress] = useState("")
@@ -90,21 +90,9 @@ const CenterMarker = () => {
 				<Popup>{`${Number(center.lat).toFixed(6)}, ${Number(center.lng).toFixed(6)}`}</Popup>
 			</Marker>
 			{meCenter && (
-				<Marker
-					position={meCenter}
-					icon={
-						new L.Icon({
-							iconUrl: "/map/marker-icon-red.png",
-							shadowUrl: "/map/marker-shadow.png",
-							iconSize: [25, 41],
-							iconAnchor: [12, 41],
-							popupAnchor: [1, -34],
-							shadowSize: [41, 41]
-						})
-					}
-				>
+				<RedMarker position={meCenter}>
 					<Popup>{`Ваше местоположение`}</Popup>
-				</Marker>
+				</RedMarker>
 			)}
 		</>
 	)
@@ -117,7 +105,9 @@ const HotelsInfoForm: FC = () => {
 	const { t } = useTranslation()
 
 	const { data: locationCities, isLoading: locationLoading } =
-		useGetLocationsQuery()
+		useGetLocationsQuery({
+			page_size: 1000
+		})
 
 	const { data: categories, isLoading: categoriesLoading } =
 		useGetCategoriesQuery()

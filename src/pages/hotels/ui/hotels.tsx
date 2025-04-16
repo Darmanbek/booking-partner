@@ -1,9 +1,12 @@
 import { type FC } from "react"
+import { MatchLoading } from "src/widgets/match-loading"
+import { HotelsList } from "./lists"
 
 const Hotels: FC = () => {
 	return (
 		<>
-			<h1>Hotels</h1>
+			<MatchLoading to={"/hotels/$hotelSlug"} />
+			<HotelsList />
 		</>
 	)
 }

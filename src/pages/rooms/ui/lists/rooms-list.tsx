@@ -1,5 +1,5 @@
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons"
-import { useNavigate } from "@tanstack/react-router"
+import { useNavigate, useParams } from "@tanstack/react-router"
 import { Button, Flex, Input, List, type ListProps } from "antd"
 import { type FC } from "react"
 import { type Room } from "src/services/rooms"
@@ -19,6 +19,9 @@ const RoomsList: FC<HotelsListProps> = ({
 	}
 }) => {
 	const navigate = useNavigate()
+	const { hotelSlug } = useParams({
+		from: "/_layout/hotels/$hotelSlug/_hotel-layout/rooms/"
+	})
 
 	return (
 		<>
@@ -34,7 +37,10 @@ const RoomsList: FC<HotelsListProps> = ({
 							icon={<PlusOutlined />}
 							onClick={() =>
 								navigate({
-									to: "/rooms/new"
+									to: "/hotels/$hotelSlug/rooms/new",
+									params: {
+										hotelSlug
+									}
 								})
 							}
 						>

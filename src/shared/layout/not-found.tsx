@@ -33,7 +33,7 @@ const NotFound: FC<NotFoundProps> = ({ data }) => {
 							icon={<HomeOutlined />}
 							onClick={() =>
 								router.navigate({
-									to: "/hotel",
+									to: "/hotels",
 									replace: true
 								})
 							}

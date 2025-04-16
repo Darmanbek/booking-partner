@@ -43,14 +43,14 @@ const FormDrawer: FC<FormDrawerProps> = ({
 	}, [loading, success])
 	return (
 		<Drawer
-			open={open ?? storeKey === formKey}
+			open={open && storeKey === formKey}
 			closeIcon={<DeleteFilled />}
 			title={params ? "Изменить" : "Добавить"}
 			onClose={onCloseDrawer}
 			placement={"right"}
 			styles={{
 				body: {
-					padding: 16
+					paddingBlock: 16
 				}
 			}}
 			footer={

@@ -58,7 +58,7 @@ const HotelsRegister: FC = () => {
 	useEffect(() => {
 		if (isSuccess) {
 			navigate({
-				to: "/hotel",
+				to: "/hotels",
 				replace: true
 			})
 		}

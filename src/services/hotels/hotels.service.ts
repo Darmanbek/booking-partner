@@ -1,12 +1,26 @@
-import type { ParamId, ResponseSingleData } from "src/services/shared"
+import type {
+	GetParams,
+	ImageFile,
+	ParamId,
+	ResponseData,
+	ResponseSingleData
+} from "src/services/shared"
 import { api } from "src/shared/api"
 import type { Hotel, HotelChange } from "./hotels.types"
 
 class HotelsService {
-	get = async (
-		params: Record<string, unknown>
-	): Promise<ResponseSingleData<Hotel>> => {
-		const response = await api.get(`/partners/hotel`, { params })
+	get = async (params: GetParams = {}): Promise<ResponseData<Hotel>> => {
+		const response = await api.get(`/partners/hotels `, { params })
+		return response.data
+	}
+
+	getBySlug = async (slug: ParamId): Promise<ResponseSingleData<Hotel>> => {
+		const response = await api.get(`/partners/hotels/${slug}`)
+		return response.data
+	}
+
+	getImagesBySlug = async (slug: ParamId): Promise<ResponseData<ImageFile>> => {
+		const response = await api.get(`/hotels/${slug}/images`)
 		return response.data
 	}
 
@@ -17,6 +31,14 @@ class HotelsService {
 
 	edit = async (form: HotelChange): Promise<ResponseSingleData<Hotel>> => {
 		const response = await api.put(`/hotels/${form.slug}`, form)
+		return response.data
+	}
+
+	deleteImageBySlug = async (
+		slug: ParamId,
+		id: ParamId
+	): Promise<ResponseSingleData<void>> => {
+		const response = await api.delete(`/hotels/${slug}/images/${id}`)
 		return response.data
 	}
 

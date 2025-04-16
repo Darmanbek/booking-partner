@@ -1,4 +1,4 @@
-import type { ImageFile, TranslateName } from "src/services/shared"
+import type { Coordinates, ImageFile, TranslateName } from "src/services/shared"
 
 export type Hotel = {
 	id: number
@@ -15,6 +15,9 @@ export type Hotel = {
 	rule: HotelRule
 	hotel_info: HotelInfo
 	hotel_category: HotelCategory
+	rating: number | null
+	min_price: number | null
+	guests: number | null
 	created_at: string
 	updated_at: string | null
 }
@@ -32,18 +35,13 @@ export type HotelLocation = {
 	address: string
 	city: string
 	city_slug: string
-	coordinates: HotelCoordinates
+	coordinates: Coordinates
 	latitude: number
 	longitude: number
 	distance_to_center: number
 	to_airport: number
 	to_railway: number
 	to_city_center: number
-}
-
-export type HotelCoordinates = {
-	latitude: number
-	longitude: number
 }
 
 export type HotelInfo = {
@@ -87,7 +85,3 @@ export type HotelChange = {
 	second_phone_for_guests: string
 	site_url: string
 }
-
-export type HotelInformationForBooking = {}
-
-export type HotelInformationForGuests = {}

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios"
+import axios, { type AxiosError } from "axios"
 import { BASE_URL } from "src/shared/config"
 import { tokenStorage } from "src/shared/utils"
 import { refreshAccessToken } from "./api.service"

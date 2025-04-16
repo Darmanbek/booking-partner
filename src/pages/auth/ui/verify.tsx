@@ -36,7 +36,7 @@ const Verify: FC = () => {
 			onCloseVerify()
 			auth.login(verifyData?.data, remember)
 			navigate({
-				to: "/hotel",
+				to: "/hotels",
 				replace: true
 			})
 		}

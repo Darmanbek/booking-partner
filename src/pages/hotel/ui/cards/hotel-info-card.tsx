@@ -1,15 +1,19 @@
 import { EnvironmentOutlined } from "@ant-design/icons"
+import { useParams } from "@tanstack/react-router"
 import { Alert, Card, Descriptions, Flex, Rate } from "antd"
 import { type FC } from "react"
-import { useGetHotelsQuery } from "src/services/hotels"
+import { useGetHotelsBySlugQuery } from "src/services/hotels"
 import { useTranslation } from "src/shared/hooks"
 import { EditButton } from "src/widgets/edit-button"
 
 const HotelInfoCard: FC = () => {
 	const { t } = useTranslation()
+	const { hotelSlug } = useParams({
+		from: "/_layout/hotels/$hotelSlug"
+	})
 
-	const { data: hotel, isLoading } = useGetHotelsQuery()
-	console.log(hotel)
+	const { data: hotel, isLoading } = useGetHotelsBySlugQuery(hotelSlug)
+
 	return (
 		<>
 			<Card
@@ -64,7 +68,9 @@ const HotelInfoCard: FC = () => {
 					<Alert
 						type={"success"}
 						message={"Количество звёзд"}
-						description={<Rate value={5} disabled={true} />}
+						description={
+							<Rate value={Number(hotel?.data?.rating) || 0} disabled={true} />
+						}
 					/>
 				</Flex>
 			</Card>

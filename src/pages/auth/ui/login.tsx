@@ -43,7 +43,7 @@ const Login: FC = () => {
 		if (isSuccess && loginData?.data) {
 			auth.login(loginData?.data, remember)
 			navigate({
-				to: "/hotel",
+				to: "/hotels",
 				replace: true
 			})
 		}
