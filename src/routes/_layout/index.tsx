@@ -4,12 +4,12 @@ export const Route = createFileRoute("/_layout/")({
 	component: RouteComponent,
 	beforeLoad: () => {
 		throw redirect({
-			to: "/hotel",
+			to: "/hotels",
 			replace: true
 		})
 	}
 })
 
 function RouteComponent() {
-	return <Navigate to={"/hotel"} replace={true} />
+	return <Navigate to={"/hotels"} replace={true} />
 }

@@ -4,6 +4,7 @@ import {
 	UserOutlined
 } from "@ant-design/icons"
 import { useNavigate } from "@tanstack/react-router"
+import { useResponsive } from "antd-style"
 import Avatar from "antd/es/avatar"
 import Flex from "antd/es/flex"
 import Menu from "antd/es/menu"
@@ -18,8 +19,8 @@ import { formatPhone } from "src/shared/utils"
 const ProfileAvatar: FC = () => {
 	const navigate = useNavigate()
 	const auth = useAuth()
+	const { mobile = false } = useResponsive()
 	const { data: profile, isLoading } = useGetMeQuery()
-
 	const { mutate: logout, isPending, isSuccess } = useLogoutMutation()
 
 	const onSelectMenu = (key: string) => {
@@ -105,7 +106,7 @@ const ProfileAvatar: FC = () => {
 							isLoading ? <LoadingOutlined spin={true} /> : <UserOutlined />
 						}
 					/>
-					<Typography.Text>
+					<Typography.Text hidden={mobile}>
 						{isLoading
 							? ""
 							: profile

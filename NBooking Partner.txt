@@ -1,0 +1,16 @@
+Routes for partner
+
+auth
+ - login
+ - register
+
+hotels
+ - hotels list
+ - new hotel
+
+hotel
+ - hotel info
+ - available and prices
+ - booking list
+ - rooms list
+

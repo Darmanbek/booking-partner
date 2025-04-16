@@ -5,9 +5,11 @@ export type Hotel = {
 	slug: string
 	name: TranslateName
 	description: TranslateName
+	category: TranslateName
 	hotel_admin_id: number
 	is_active: boolean
 	images: ImageFile[]
+	location: HotelLocation
 	hotel_category_id: number
 	hotel_rating: number | null
 	rule: HotelRule
@@ -24,6 +26,24 @@ export type HotelRule = {
 	check_out_until: string | null
 	check_out_from: string
 	hotel_id: number
+}
+
+export type HotelLocation = {
+	address: string
+	city: string
+	city_slug: string
+	coordinates: HotelCoordinates
+	latitude: number
+	longitude: number
+	distance_to_center: number
+	to_airport: number
+	to_railway: number
+	to_city_center: number
+}
+
+export type HotelCoordinates = {
+	latitude: number
+	longitude: number
 }
 
 export type HotelInfo = {

@@ -1,17 +1,21 @@
-import { EditOutlined, EnvironmentOutlined } from "@ant-design/icons"
-import { Alert, Button, Card, Descriptions, Flex, Rate } from "antd"
+import { EnvironmentOutlined } from "@ant-design/icons"
+import { Alert, Card, Descriptions, Flex, Rate } from "antd"
 import { type FC } from "react"
+import { useGetHotelsQuery } from "src/services/hotels"
+import { useTranslation } from "src/shared/hooks"
+import { EditButton } from "src/widgets/edit-button"
 
 const HotelInfoCard: FC = () => {
+	const { t } = useTranslation()
+
+	const { data: hotel, isLoading } = useGetHotelsQuery()
+	console.log(hotel)
 	return (
 		<>
 			<Card
+				loading={isLoading}
 				title={"Общая информация"}
-				extra={
-					<Button type={"text"} icon={<EditOutlined />}>
-						Редактировать
-					</Button>
-				}
+				extra={<EditButton params={{}} />}
 			>
 				<Flex vertical={true} gap={20}>
 					<Descriptions
@@ -20,24 +24,25 @@ const HotelInfoCard: FC = () => {
 							{
 								key: "name",
 								label: "Название",
-								children: "Hotel"
+								children: t(hotel?.data?.name)
 							},
 							{
 								key: "address",
 								label: "Адрес",
 								children: (
 									<a
-										href={"https://maps.google.com/?q=Ташкент, улица Чорсу, 31"}
+										href={`https://maps.google.com/?q=${hotel?.data?.location?.coordinates?.latitude} ${hotel?.data?.location?.coordinates?.longitude}`}
 										target={"_blank"}
 									>
-										<EnvironmentOutlined /> Ташкент, улица Чорсу, 31
+										<EnvironmentOutlined /> {hotel?.data?.location?.city},{" "}
+										{hotel?.data?.location?.address}
 									</a>
 								)
 							},
 							{
 								key: "type",
 								label: "Тип объекта",
-								children: "Отель"
+								children: t(hotel?.data?.category)
 							},
 							{
 								key: "count",

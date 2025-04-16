@@ -1,17 +1,13 @@
-import { EditOutlined } from "@ant-design/icons"
-import { Button, Card, Col, Image, Row } from "antd"
+import { Card, Col, Image, Row } from "antd"
 import { type FC } from "react"
+import { EditButton } from "src/widgets/edit-button"
 
 const HotelImagesCard: FC = () => {
 	return (
 		<>
 			<Card
 				title={"Фотографии отеля"}
-				extra={
-					<Button type={"text"} icon={<EditOutlined />}>
-						Редактировать
-					</Button>
-				}
+				extra={<EditButton params={{}} formKey={"primary"} />}
 			>
 				<Image.PreviewGroup>
 					<Row wrap={true} gutter={8} style={{ rowGap: 8 }}>

@@ -6,26 +6,28 @@ import {
 } from "@ant-design/icons"
 import type { MenuProps } from "antd"
 
-type MenuItem = Required<MenuProps>["items"][number]
+type MenuItem = Required<MenuProps>["items"][number] & {
+	key: string
+}
 
 export const menuData: MenuItem[] = [
 	{
-		key: "/hotel",
+		key: "/hotels/$hotelSlug",
 		icon: <HomeOutlined />,
 		label: "Отель"
 	},
 	{
-		key: "/availability-prices",
+		key: "/hotels/$hotelSlug/availability-prices",
 		icon: <InsertRowAboveOutlined />,
 		label: "Доступность и цены"
 	},
 	{
-		key: "/orders",
+		key: "/hotels/$hotelSlug/orders",
 		icon: <OrderedListOutlined />,
 		label: "Бронирования"
 	},
 	{
-		key: "/rooms",
+		key: "/hotels/$hotelSlug/rooms",
 		icon: <InboxOutlined />,
 		label: "Номера"
 	}
