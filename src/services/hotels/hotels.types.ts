@@ -1,4 +1,11 @@
-import type { Coordinates, ImageFile, TranslateName } from "src/services/shared"
+import type { Category } from "src/services/categories"
+import type { Partner } from "src/services/partners"
+import type {
+	Coordinates,
+	ImageFile,
+	ReviewCategoryRating,
+	TranslateName
+} from "src/services/shared"
 
 export type Hotel = {
 	id: number
@@ -14,7 +21,7 @@ export type Hotel = {
 	hotel_rating: number | null
 	rule: HotelRule
 	hotel_info: HotelInfo
-	hotel_category: HotelCategory
+	hotel_category: Category
 	rating: number | null
 	min_price: number | null
 	guests: number | null
@@ -53,10 +60,16 @@ export type HotelInfo = {
 	hotel_id: number
 }
 
-export type HotelCategory = {
+export type HotelReview = {
+	comment: string
+	hotel_id: number
+	user_id: number
 	id: number
-	name: TranslateName
-	description: TranslateName
+	updated_at: string | null
+	rating: number
+	created_at: string
+	review_category_ratings: ReviewCategoryRating[]
+	user: Partner
 }
 
 export type HotelChange = {

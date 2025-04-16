@@ -1,12 +1,14 @@
+import { Amenity } from "src/services/amenities"
 import type {
 	GetParams,
 	ImageFile,
 	ParamId,
+	Response,
 	ResponseData,
 	ResponseSingleData
 } from "src/services/shared"
 import { api } from "src/shared/api"
-import type { Hotel, HotelChange } from "./hotels.types"
+import type { Hotel, HotelChange, HotelReview } from "./hotels.types"
 
 class HotelsService {
 	get = async (params: GetParams = {}): Promise<ResponseData<Hotel>> => {
@@ -21,6 +23,21 @@ class HotelsService {
 
 	getImagesBySlug = async (slug: ParamId): Promise<ResponseData<ImageFile>> => {
 		const response = await api.get(`/hotels/${slug}/images`)
+		return response.data
+	}
+
+	getAmenitiesBySlug = async (
+		slug: ParamId
+	): Promise<ResponseData<Amenity>> => {
+		const response = await api.get(`/hotels/${slug}/amenities`)
+		return response.data
+	}
+
+	getReviewsBySlug = async (
+		slug: ParamId,
+		params: GetParams = {}
+	): Promise<Response<HotelReview>> => {
+		const response = await api.get(`/hotels/${slug}/reviews`, { params })
 		return response.data
 	}
 

@@ -1,5 +1,11 @@
 import dayjs, { type Dayjs } from "dayjs"
 
+export const formatNumber = <T>(value: T, defaultValue: number = 0) => {
+	if (isNaN(Number(value))) return defaultValue
+	return Number(value) || defaultValue
+}
+
+
 export const formatPrice = (price?: number | string): string => {
 	if (price === undefined && isNaN(Number(price))) {
 		return "0"

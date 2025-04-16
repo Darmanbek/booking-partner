@@ -43,6 +43,7 @@ const FormDrawer: FC<FormDrawerProps> = ({
 	}, [loading, success])
 	return (
 		<Drawer
+			width={375}
 			open={open && storeKey === formKey}
 			closeIcon={<DeleteFilled />}
 			title={params ? "Изменить" : "Добавить"}

@@ -25,6 +25,25 @@ const useGetHotelsImagesBySlugQuery = (slug: ParamId) => {
 	})
 }
 
+const useGetHotelsAmenitiesBySlugQuery = (slug: ParamId) => {
+	return useCrudQuery({
+		queryFn: () => hotelsService.getAmenitiesBySlug(slug),
+		queryKey: ["hotels", slug, "amenities"],
+		enabled: !!slug
+	})
+}
+
+const useGetHotelsReviewsBySlugQuery = (
+	slug: ParamId,
+	params: GetParams = {}
+) => {
+	return useCrudQuery({
+		queryFn: () => hotelsService.getReviewsBySlug(slug, params),
+		queryKey: ["hotels", slug, "reviews", ...Object.values(params)],
+		enabled: !!slug
+	})
+}
+
 const useCreateHotelsMutation = () => {
 	return useCrudMutation({
 		mutationFn: hotelsService.create,
@@ -71,6 +90,8 @@ export {
 	useGetHotelsQuery,
 	useGetHotelsBySlugQuery,
 	useGetHotelsImagesBySlugQuery,
+	useGetHotelsAmenitiesBySlugQuery,
+	useGetHotelsReviewsBySlugQuery,
 	useCreateHotelsMutation,
 	useEditHotelsMutation,
 	useDeleteHotelsImageBySlugMutation,

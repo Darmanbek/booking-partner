@@ -1,60 +1,77 @@
-import { Card, Divider, Flex, List, Progress, Space, Typography } from "antd"
+import { UserOutlined } from "@ant-design/icons"
+import { useParams } from "@tanstack/react-router"
+import { Card, Flex, List, Progress, Space } from "antd"
 import Avatar from "antd/es/avatar"
-import { type FC } from "react"
+import { type FC, useState } from "react"
+import {
+	type HotelReview,
+	useGetHotelsBySlugQuery,
+	useGetHotelsReviewsBySlugQuery
+} from "src/services/hotels"
+import { useTranslation } from "src/shared/hooks"
+import { formatNumber } from "src/shared/utils"
+import { RatingContainer } from "src/widgets/rating-container"
 import { RatingTag } from "src/widgets/rating-tag"
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-	title: `User ${i + 1}`,
-	avatar: `https://api.dicebear.com/7.x/miniavs/svg?seed=${i}`,
-	description: (
-		<Space
-			direction={"vertical"}
-			split={<Divider style={{ marginBlock: 0 }} />}
-		>
-			<Space split={<Divider type={"vertical"} />}>
-				<>отдых, в одиночку</>
-				<>февраль 2024 г.</>
-			</Space>
-			<>
-				Двухместный номер Standard с видом на город (двуспальная кровать)
-				(кровать king size), 4 ночи
-			</>
-		</Space>
-	),
-	content:
-		"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aperiam aspernatur autem blanditiis corporis debitis delectus, deserunt dicta dolor dolore dolorem dolores ducimus enim error eveniet ex laboriosam nihil odit possimus repellat? Accusantium consequuntur dolorem eius minus odit perspiciatis quam."
-}))
-
 const HotelReviews: FC = () => {
+	const { hotelSlug } = useParams({
+		from: "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)/_hotel-info-layout/reviews"
+	})
+	const { t } = useTranslation()
+	const [params, setParams] = useState({
+		page: 1,
+		pageSize: 5
+	})
+
+	const {
+		data: reviews,
+		isLoading,
+		isFetching
+	} = useGetHotelsReviewsBySlugQuery(hotelSlug, {
+		page: params.page,
+		page_size: params.pageSize
+	})
+
+	const { data: hotel } = useGetHotelsBySlugQuery(hotelSlug)
+
 	return (
-		<>
-			<Card title={"Отзывы"}>
-				<List
+		<RatingContainer
+			placement={"start"}
+			text={formatNumber(hotel?.data?.rating).toFixed(1)}
+		>
+			<Card styles={{ title: { paddingLeft: 24 } }} title={"Отзывы"}>
+				<List<HotelReview>
+					loading={isLoading || isFetching}
 					itemLayout={"vertical"}
 					size={"large"}
+					rowKey={"id"}
 					pagination={{
-						onChange: (page) => {
-							console.log(page)
+						onChange: (page, pageSize) => {
+							setParams({ page, pageSize })
 						},
-						pageSize: 3
+						total: reviews?.pagination?.total,
+						pageSize: params.pageSize,
+						current: params.page
 					}}
-					dataSource={data}
-					renderItem={(item) => (
+					dataSource={reviews?.data}
+					renderItem={(item, index) => (
 						<List.Item
-							key={item.title}
+							key={index}
 							extra={
 								<Flex vertical={true}>
 									<Space size={2}>
-										<RatingTag>7.5</RatingTag>
-										<Typography.Text style={{ fontWeight: 600 }}>
-											Очень хорошо
-										</Typography.Text>
+										<RatingTag>
+											{formatNumber(item?.rating).toFixed(1)}
+										</RatingTag>
+										{/*<Typography.Text style={{ fontWeight: 600 }}>*/}
+										{/*	Очень хорошо*/}
+										{/*</Typography.Text>*/}
 									</Space>
-									{[85, 64, 84, 38].map((value, index) => (
+									{item?.review_category_ratings?.map((value, index) => (
 										<Flex key={index} vertical={true}>
 											<Progress
 												size={"small"}
-												percent={value}
+												percent={formatNumber(value.rating) * 10}
 												showInfo={false}
 											/>
 											<Flex
@@ -62,8 +79,8 @@ const HotelReviews: FC = () => {
 												style={{ width: "100%", fontSize: 12 }}
 												justify={"space-between"}
 											>
-												<span>Название</span>
-												<span>{(value || 0) / 10}</span>
+												<span>{t(value?.review_category?.name)}</span>
+												<span>{formatNumber(value.rating)}</span>
 											</Flex>
 										</Flex>
 									))}
@@ -71,16 +88,16 @@ const HotelReviews: FC = () => {
 							}
 						>
 							<List.Item.Meta
-								avatar={<Avatar src={item.avatar} />}
-								title={item.title}
-								description={item.description}
+								avatar={<Avatar icon={<UserOutlined />} />}
+								title={`${item?.user?.first_name} ${item?.user?.last_name}`}
+								description={item?.created_at}
 							/>
-							{item.content}
+							{item?.comment}
 						</List.Item>
 					)}
 				/>
 			</Card>
-		</>
+		</RatingContainer>
 	)
 }
 

@@ -1,3 +1,5 @@
+import type { Category } from "src/services/categories"
+
 export type * from "./params.types"
 export type * from "./response.types"
 
@@ -20,4 +22,12 @@ export type ImageFile = {
 export type Coordinates = {
 	latitude: number
 	longitude: number
+}
+
+export type ReviewCategoryRating = {
+	id: number
+	rating: number
+	review_category_id: number
+	review_id: number
+	review_category: Category
 }
