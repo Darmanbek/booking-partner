@@ -1,6 +1,5 @@
 import type { GetParams, ParamId } from "src/services/shared"
 import { useCrudMutation, useCrudQuery } from "src/shared/api"
-import { useAuth } from "src/shared/hooks"
 import { amenitiesService } from "./amenities.service"
 import type { HotelAmenityChange } from "./amenities.types"
 
@@ -14,8 +13,10 @@ const useGetAmenitiesQuery = (
 	})
 }
 
-const useGetHotelAmenitiesQuery = (params: GetParams = {}) => {
-	const { hotelSlug } = useAuth()
+const useGetHotelAmenitiesQuery = (
+	hotelSlug: ParamId,
+	params: GetParams = {}
+) => {
 	return useCrudQuery({
 		queryFn: () => amenitiesService.getByHotel(hotelSlug, params),
 		queryKey: ["amenities", hotelSlug, ...Object.values(params)],

@@ -36,30 +36,7 @@ const AvailabilityTable: FC = () => {
 					</Flex>
 				)}
 				columns={columns}
-				dataSource={
-					rooms?.data
-						? [
-								{
-									key: 0,
-									room_type: "Отель",
-									base_price: 0,
-									quantity: rooms.data?.reduce(
-										(total, item) => total + item.quantity,
-										0
-									),
-									room_area: 0,
-									max_guests: 0,
-									room_type_id: 1,
-									id: 0,
-									images: [],
-									amenities: [],
-									hotel_id: 0,
-									use_dinamic_price: false
-								},
-								...rooms.data
-							]
-						: []
-				}
+				dataSource={rooms?.data}
 				scroll={{
 					x: "auto"
 				}}
