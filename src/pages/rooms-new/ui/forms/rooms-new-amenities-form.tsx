@@ -33,7 +33,7 @@ const RoomsNewAmenitiesForm: FC = () => {
 			form.setFieldValue(
 				"amenities",
 				amenities?.data?.flatMap((item) =>
-					item?.hotel_amenities?.map(() => undefined)
+					item?.room_amenities?.map(() => undefined)
 				)
 			)
 		}
