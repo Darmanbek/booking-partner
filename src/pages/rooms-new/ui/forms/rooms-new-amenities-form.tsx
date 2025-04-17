@@ -15,7 +15,7 @@ const RoomsNewAmenitiesForm: FC = () => {
 			data: []
 		},
 		isLoading
-	} = useGetAmenitiesQuery()
+	} = useGetAmenitiesQuery("room")
 
 	const roomAmenities = useMemo(() => {
 		let index = 0
@@ -79,7 +79,7 @@ const RoomsNewAmenitiesForm: FC = () => {
 										),
 										children: (
 											<Space wrap={true}>
-												{item?.hotel_amenities?.map((item, childIndex) => {
+												{item?.room_amenities?.map((item, childIndex) => {
 													return (
 														<RoomsNewAmenitiesFormItem
 															field={item?.key}

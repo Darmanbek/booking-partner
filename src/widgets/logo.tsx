@@ -15,8 +15,8 @@ const Logo: FC<LogoProps> = ({ titleProps, collapsed, ...props }) => {
 	return (
 		<Space {...props}>
 			<Image
-				src={"/react.svg"}
-				fallback={"/public/react.svg"}
+				src={"/react-blue.svg"}
+				fallback={"/public/react-blue.svg"}
 				width={32}
 				height={32}
 				alt={""}

@@ -4,6 +4,7 @@ export type Amenity = {
 	id: number
 	name: TranslateName
 	hotel_amenities: HotelAmenity[]
+	room_amenities: HotelAmenity[]
 }
 
 export type HotelAmenity = {
