@@ -21,7 +21,7 @@ const RoomsNewAmenitiesForm: FC = () => {
 		let index = 0
 		return amenities?.data?.map((item) => ({
 			...item,
-			hotel_amenities: item?.hotel_amenities?.map((el) => ({
+			hotel_amenities: item?.room_amenities?.map((el) => ({
 				...el,
 				key: index++
 			}))
