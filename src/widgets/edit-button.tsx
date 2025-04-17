@@ -9,7 +9,7 @@ import {
 } from "src/shared/store"
 
 interface EditButtonProps {
-	params: FormParams
+	params?: FormParams
 	formKey?: FormKeys
 }
 
@@ -18,6 +18,7 @@ const EditButton: FC<EditButtonProps> = ({ params, formKey }) => {
 	const setParams = useFormDevtoolsStore((state) => state.setParams)
 
 	const onChangeParams = () => {
+		if (!params) return
 		setParams(params, formKey)
 	}
 

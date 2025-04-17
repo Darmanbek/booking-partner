@@ -30,7 +30,8 @@ const FormDrawer: FC<FormDrawerProps> = ({
 
 	const onCloseDrawer = useCallback(() => {
 		resetParams()
-	}, [resetParams])
+		form.resetFields()
+	}, [resetParams, form])
 
 	useEffect(() => {
 		resetRef.current = resetParams
@@ -39,8 +40,9 @@ const FormDrawer: FC<FormDrawerProps> = ({
 	useEffect(() => {
 		if (!loading && success) {
 			resetRef.current()
+			form.resetFields()
 		}
-	}, [loading, success])
+	}, [form, loading, success])
 	return (
 		<Drawer
 			width={375}

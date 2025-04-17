@@ -22,10 +22,12 @@ const useGetRoomsByIdQuery = (id: ParamId) => {
 	})
 }
 
-const useCreateRoomsMutation = () => {
-	const { hotelSlug } = useAuth()
+const useCreateRoomsMutation = (hotelSlug: ParamId) => {
 	return useCrudMutation({
 		mutationFn: (form: RoomChange) => roomsService.create(hotelSlug, form),
+		renderSuccess: () => ({
+			description: "Комната успешно создана"
+		}),
 		invalidate: {
 			queryKey: ["rooms", hotelSlug]
 		}

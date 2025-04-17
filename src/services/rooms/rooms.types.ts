@@ -1,4 +1,5 @@
 export type Room = {
+	key: number
 	id: number
 	quantity: number
 	base_price: number
@@ -19,5 +20,5 @@ export type RoomChange = {
 	room_area: number
 	max_guests: number
 	room_type_id: number
-	amenities: number[] | number[][]
+	amenities: number[]
 }

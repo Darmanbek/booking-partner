@@ -22,10 +22,10 @@ function RouteComponent() {
 						key: `/hotels/${hotelSlug}/amenities`,
 						label: "Услуги и удобства"
 					},
-					{
-						key: `/hotels/${hotelSlug}/rules`,
-						label: "Условия"
-					},
+					// {
+					// 	key: `/hotels/${hotelSlug}/rules`,
+					// 	label: "Условия"
+					// },
 					{
 						key: `/hotels/${hotelSlug}/reviews`,
 						label: "Отзывы"

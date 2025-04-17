@@ -20,11 +20,13 @@ export type Hotel = {
 	hotel_category_id: number
 	hotel_rating: number | null
 	rule: HotelRule
+	hotel_rules: HotelRule
 	hotel_info: HotelInfo
 	hotel_category: Category
 	rating: number | null
 	min_price: number | null
 	guests: number | null
+	rooms_count: number | null
 	created_at: string
 	updated_at: string | null
 }

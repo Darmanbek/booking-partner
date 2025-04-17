@@ -34,10 +34,23 @@ const RoomsNewInfoForm: FC = () => {
 					requiredMark={false}
 					layout={"vertical"}
 					autoComplete={"off"}
+					scrollToFirstError={{
+						scrollMode: "always",
+						block: "center",
+						inline: "center"
+					}}
 				>
 					<Row gutter={16} style={{ rowGap: 16 }}>
 						<Col xs={24} md={16}>
-							<Form.Item<RoomChange> name={"room_type_id"} label={"Название"}>
+							<Form.Item<RoomChange>
+								name={"room_type_id"}
+								label={"Название"}
+								rules={[
+									{
+										required: true
+									}
+								]}
+							>
 								<Select
 									loading={isLoading}
 									disabled={isLoading}
@@ -54,6 +67,7 @@ const RoomsNewInfoForm: FC = () => {
 							<Form.Item<RoomChange>
 								name={"max_guests"}
 								label={"Количество гостей"}
+								initialValue={1}
 							>
 								<Counter />
 							</Form.Item>
@@ -64,6 +78,11 @@ const RoomsNewInfoForm: FC = () => {
 							<Form.Item<RoomChange>
 								name={"room_area"}
 								label={"Площадь номера (м²)"}
+								rules={[
+									{
+										required: true
+									}
+								]}
 							>
 								<InputNumber style={{ width: "100%" }} />
 							</Form.Item>
@@ -72,6 +91,7 @@ const RoomsNewInfoForm: FC = () => {
 							<Form.Item<RoomChange>
 								name={"quantity"}
 								label={"Количество номеров"}
+								initialValue={1}
 							>
 								<Counter />
 							</Form.Item>

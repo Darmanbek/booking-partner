@@ -40,6 +40,7 @@ const PricesTable: FC = () => {
 					rooms?.data
 						? [
 								{
+									key: 0,
 									room_type: "Отель",
 									base_price: 0,
 									quantity: 0,

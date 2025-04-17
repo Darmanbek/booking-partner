@@ -28,11 +28,12 @@ const Logo: FC<LogoProps> = ({ titleProps, collapsed, ...props }) => {
 					style={{
 						whiteSpace: "nowrap",
 						textOverflow: "ellipsis",
-						overflow: "hidden"
+						overflow: "hidden",
+						lineHeight: 1.3
 					}}
 					{...titleProps}
 				>
-					Booking
+					NBooking.uz
 				</Title>
 			)}
 		</Space>

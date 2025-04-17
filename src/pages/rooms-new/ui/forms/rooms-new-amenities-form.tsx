@@ -1,8 +1,9 @@
-import { Card, Collapse, Form, Radio, Space, Typography } from "antd"
+import { Card, Collapse, Form, Space, Typography } from "antd"
 import { type FC, useEffect, useMemo } from "react"
 import { useRoomsNew } from "src/pages/rooms-new/hooks"
 import { useGetAmenitiesQuery } from "src/services/amenities"
 import { useTranslation } from "src/shared/hooks"
+import { default as RoomsNewAmenitiesFormItem } from "./rooms-new-amenities-form-item"
 
 const { Title } = Typography
 
@@ -27,8 +28,6 @@ const RoomsNewAmenitiesForm: FC = () => {
 		}))
 	}, [amenities?.data])
 
-	const formAmenities = Form.useWatch("amenities", form) || [[]]
-
 	useEffect(() => {
 		if (amenities) {
 			form.setFieldValue(
@@ -50,55 +49,53 @@ const RoomsNewAmenitiesForm: FC = () => {
 					layout={"vertical"}
 					onFinish={onFinish}
 				>
-					<Form.List name={"amenities"} initialValue={[[]]}>
-						{() => (
-							<Collapse
-								ghost={true}
-								expandIconPosition={"end"}
-								defaultActiveKey={[0]}
-								items={roomAmenities?.map((item, index) => ({
-									key: index,
-									label: (
-										<Title style={{ fontSize: "inherit" }}>
-											{t(item.name)}
-										</Title>
-									),
-									children: (
-										<Space wrap={true}>
-											{item?.hotel_amenities?.map((item, childIndex) => {
-												return (
-													<Form.Item key={childIndex} name={[item.key]}>
-														<Radio.Button
+					<Form.List
+						name={"amenities"}
+						initialValue={[]}
+						rules={[
+							{
+								validator: async (_, value) => {
+									if (!value || value?.filter?.(Boolean)?.length < 2) {
+										return Promise.reject(
+											new Error("Пожалуйста добавьте услуги")
+										)
+									}
+								}
+							}
+						]}
+					>
+						{(_f, _o, { errors }) => (
+							<>
+								<Collapse
+									ghost={true}
+									expandIconPosition={"end"}
+									defaultActiveKey={[0]}
+									items={roomAmenities?.map((item, index) => ({
+										key: index,
+										label: (
+											<Title style={{ fontSize: "inherit" }}>
+												{t(item.name)}
+											</Title>
+										),
+										children: (
+											<Space wrap={true}>
+												{item?.hotel_amenities?.map((item, childIndex) => {
+													return (
+														<RoomsNewAmenitiesFormItem
+															field={item?.key}
+															data={item}
 															key={childIndex}
-															value={item?.id}
-															checked={
-																!!formAmenities?.find((el) => el === item?.id)
-															}
-															onClick={() => {
-																if (
-																	formAmenities?.find((el) => el === item?.id)
-																) {
-																	form.setFieldValue(
-																		["amenities", item.key],
-																		undefined
-																	)
-																	return
-																}
-																form.setFieldValue(
-																	["amenities", item.key],
-																	item?.id
-																)
-															}}
-														>
-															{t(item.name)}
-														</Radio.Button>
-													</Form.Item>
-												)
-											})}
-										</Space>
-									)
-								}))}
-							/>
+														/>
+													)
+												})}
+											</Space>
+										)
+									}))}
+								/>
+								<Form.Item style={{ margin: 0 }}>
+									<Form.ErrorList errors={errors} />
+								</Form.Item>
+							</>
 						)}
 					</Form.List>
 				</Form>
