@@ -7,7 +7,7 @@ import { useAvailabilityTableColumns } from "./availability-table-columns"
 const AvailabilityTable: FC = () => {
 	const [date, setDate] = useState(() => dayjs())
 
-	const { data: rooms } = useGetRoomsQuery()
+	const { data: rooms } = useGetRoomsQuery("")
 
 	const columns = useAvailabilityTableColumns(date)
 	return (
@@ -51,7 +51,8 @@ const AvailabilityTable: FC = () => {
 									max_guests: 0,
 									room_type_id: 1,
 									id: 0,
-									image: "",
+									images: [],
+									amenities: [],
 									hotel_id: 0,
 									use_dinamic_price: false
 								},
