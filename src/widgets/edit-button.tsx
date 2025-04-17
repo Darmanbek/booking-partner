@@ -11,13 +11,15 @@ import {
 interface EditButtonProps {
 	params?: FormParams
 	formKey?: FormKeys
+	disableFrom?: boolean
 }
 
-const EditButton: FC<EditButtonProps> = ({ params, formKey }) => {
+const EditButton: FC<EditButtonProps> = ({ params, formKey, disableFrom }) => {
 	const { mobile = false } = useResponsive()
 	const setParams = useFormDevtoolsStore((state) => state.setParams)
 
 	const onChangeParams = () => {
+		if (disableFrom) return
 		if (!params) return
 		setParams(params, formKey)
 	}

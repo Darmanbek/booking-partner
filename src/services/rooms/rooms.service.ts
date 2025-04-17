@@ -56,7 +56,7 @@ class RoomsService {
 		hotelSlug: ParamId,
 		id: ParamId
 	): Promise<ResponseSingleData<void>> => {
-		const response = await api.delete(`/hotels/${hotelSlug}/images/${id}`)
+		const response = await api.delete(`/hotels/${hotelSlug}/rooms/images/${id}`)
 		return response.data
 	}
 

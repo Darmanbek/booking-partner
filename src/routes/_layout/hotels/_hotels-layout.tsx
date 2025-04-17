@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router"
 import { MainContent } from "src/shared/layout"
+import { Container } from "src/shared/ui"
 
 export const Route = createFileRoute("/_layout/hotels/_hotels-layout")({
 	component: RouteComponent
@@ -8,7 +9,9 @@ export const Route = createFileRoute("/_layout/hotels/_hotels-layout")({
 function RouteComponent() {
 	return (
 		<MainContent>
-			<Outlet />
+			<Container>
+				<Outlet />
+			</Container>
 		</MainContent>
 	)
 }

@@ -5,17 +5,23 @@ import { Header as LayoutHeader } from "antd/es/layout/layout"
 import Title from "antd/es/typography/Title"
 import { type FC } from "react"
 import { useGetHotelsBySlugQuery } from "src/services/hotels"
-import { useToken, useTranslation } from "src/shared/hooks"
+import { useAuth, useToken, useTranslation } from "src/shared/hooks"
 import { Logo } from "src/widgets/logo"
-import { BellButton } from "./header/bell-button"
-import { ProfileAvatar } from "./header/profile-avatar"
+import { AuthButtons } from "./auth-buttons"
+import { BellButton } from "./bell-button"
+import { ProfileAvatar } from "./profile-avatar"
 
-const Header: FC = () => {
+interface HeaderProps {
+	auth?: boolean
+}
+
+const Header: FC<HeaderProps> = ({ auth }) => {
 	const { token } = useToken()
 	const { hotelSlug } = useParams({
 		strict: false
 	})
 	const { t } = useTranslation()
+	const { isAuth } = useAuth()
 	const { mobile = false } = useResponsive()
 	const {
 		data: hotel,
@@ -47,10 +53,14 @@ const Header: FC = () => {
 					)}
 				</Space>
 
-				<Space>
-					<BellButton />
-					<ProfileAvatar />
-				</Space>
+				{isAuth || auth ? (
+					<Space>
+						<BellButton />
+						<ProfileAvatar />
+					</Space>
+				) : (
+					<AuthButtons />
+				)}
 			</Flex>
 		</LayoutHeader>
 	)

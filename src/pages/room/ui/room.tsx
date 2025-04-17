@@ -1,10 +1,12 @@
 import { type FC } from "react"
-import { RoomImagesCard } from "./cards"
+import { RoomAmenitiesCard, RoomImagesCard, RoomInfoCard } from "./cards"
 
 const Room: FC = () => {
 	return (
 		<>
+			<RoomInfoCard />
 			<RoomImagesCard />
+			<RoomAmenitiesCard />
 		</>
 	)
 }

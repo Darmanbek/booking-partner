@@ -13,6 +13,9 @@ export type Room = {
 	max_guests: number
 	room_type_id: number
 	room_type: string
+	guest_name: string
+	guest_quantity: string
+	room_price: string
 	use_dinamic_price: boolean
 }
 

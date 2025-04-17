@@ -58,6 +58,9 @@ const useEditRoomsMutation = (hotelSlug: ParamId) => {
 const useDeleteRoomsImageByIdMutation = (hotelSlug: ParamId) => {
 	return useCrudMutation({
 		mutationFn: (id: ParamId) => roomsService.deleteImageBySlug(hotelSlug, id),
+		renderSuccess: () => ({
+			description: "Фото успешно удалена"
+		}),
 		invalidate: {
 			queryKey: ["rooms", hotelSlug]
 		}

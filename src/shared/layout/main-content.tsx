@@ -7,7 +7,7 @@ const MainContent: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<Content
 			style={{
-				padding: token.paddingLG,
+				padding: `${token.paddingLG}px 0`,
 				display: "flex",
 				flexDirection: "column",
 				gap: token.padding

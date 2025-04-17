@@ -5,17 +5,11 @@ import {
 	useMemo,
 	useState
 } from "react"
-import {
-	AuthContext,
-	type AuthContextValues,
-	HotelContext
-} from "src/shared/context"
+import { AuthContext, type AuthContextValues } from "src/shared/context"
 import { tokenStorage } from "src/shared/utils"
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [isAuth, setIsAuth] = useState(() => !!tokenStorage.getAccess())
-	const [hotelSlug, setHotelSlug] = useState<string | null>(null)
-	const [hasHotel, setHasHotel] = useState<boolean>(false)
 
 	const login: AuthContextValues["login"] = useCallback((token, remember) => {
 		tokenStorage.setAccess(token?.access_token, remember)
@@ -38,23 +32,8 @@ const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 		}),
 		[isAuth, login, logout]
 	)
-
-	const hotelValues = useMemo(
-		() => ({
-			hotelSlug,
-			setHotelSlug,
-			hasHotel,
-			setHasHotel
-		}),
-		[hasHotel, hotelSlug]
-	)
-
 	return (
-		<AuthContext.Provider value={authValues}>
-			<HotelContext.Provider value={hotelValues}>
-				{children}
-			</HotelContext.Provider>
-		</AuthContext.Provider>
+		<AuthContext.Provider value={authValues}>{children}</AuthContext.Provider>
 	)
 }
 

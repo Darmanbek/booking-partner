@@ -68,7 +68,7 @@ const RoomsListItem: FC<HotelListItemProps> = ({ data: room }) => {
 									style={{ fontSize: "inherit" }}
 									icon={<RetweetOutlined />}
 								>
-									{`${formatNumber(room?.room_area)?.toFixed(1)} м2`}
+									{`${formatNumber(room?.room_area)?.toFixed(1)} м²`}
 								</Tag>
 								<Tag
 									color={"blue"}
