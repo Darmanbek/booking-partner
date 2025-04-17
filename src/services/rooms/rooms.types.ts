@@ -1,10 +1,14 @@
+import type { Amenity } from "src/services/amenities"
+import type { ImageFile } from "src/services/shared"
+
 export type Room = {
 	key: number
 	id: number
 	quantity: number
 	base_price: number
 	room_area: number
-	image: string
+	images: ImageFile[]
+	amenities: Amenity[]
 	hotel_id: number
 	max_guests: number
 	room_type_id: number

@@ -1,9 +1,14 @@
-import { MoreOutlined, RetweetOutlined, TeamOutlined } from "@ant-design/icons"
-import { Button, Card, Flex, Image, List, Space, Typography } from "antd"
+import { RetweetOutlined, RightOutlined, TeamOutlined } from "@ant-design/icons"
+import { Link, useNavigate, useParams } from "@tanstack/react-router"
+import { Button, Card, Flex, Image, List, Space, Tag, Typography } from "antd"
 import { type FC } from "react"
 import type { Room } from "src/services/rooms"
 import { useToken, useTranslation } from "src/shared/hooks"
-import { formatPriceWithCurrency } from "src/shared/utils/format.utils"
+import {
+	formatNumber,
+	formatPriceWithCurrency
+} from "src/shared/utils/format.utils"
+import { MoreButton } from "src/widgets/more-button"
 
 const { Text, Title } = Typography
 
@@ -13,6 +18,10 @@ interface HotelListItemProps {
 
 const RoomsListItem: FC<HotelListItemProps> = ({ data: room }) => {
 	const { t } = useTranslation()
+	const { hotelSlug } = useParams({
+		from: "/_layout/hotels/$hotelSlug/_hotel-layout/rooms/"
+	})
+	const navigate = useNavigate()
 
 	const { token } = useToken()
 	return (
@@ -30,7 +39,8 @@ const RoomsListItem: FC<HotelListItemProps> = ({ data: room }) => {
 			<List.Item style={{ padding: 0, alignItems: "stretch" }}>
 				<Flex style={{ position: "relative", padding: 12 }}>
 					<Image
-						width={256}
+						width={164}
+						height={164}
 						style={{
 							aspectRatio: 1,
 							borderRadius: token.borderRadiusLG,
@@ -38,8 +48,9 @@ const RoomsListItem: FC<HotelListItemProps> = ({ data: room }) => {
 							justifyContent: "center",
 							alignItems: "center"
 						}}
+						fallback={"https://placehold.co/120x120"}
 						alt={t(room?.room_type)}
-						src={room?.image}
+						src={room?.images?.[0]?.image}
 					/>
 				</Flex>
 				<Flex
@@ -51,31 +62,66 @@ const RoomsListItem: FC<HotelListItemProps> = ({ data: room }) => {
 					<Flex justify={"space-between"}>
 						<Flex vertical={true} align={"start"}>
 							<Title level={4}>{t(room?.room_type)}</Title>
-							<Space split={<Text>•</Text>}>
-								<Space>
-									<RetweetOutlined />
-									{`${Number(room?.room_area)?.toFixed(1)} м2`}
-								</Space>
-								<Space>
-									<TeamOutlined />
-									{`Количество гостей: ${room?.max_guests || 0}`}
-								</Space>
+							<Space size={2}>
+								<Tag
+									color={"green"}
+									style={{ fontSize: "inherit" }}
+									icon={<RetweetOutlined />}
+								>
+									{`${formatNumber(room?.room_area)?.toFixed(1)} м2`}
+								</Tag>
+								<Tag
+									color={"blue"}
+									style={{ fontSize: "inherit" }}
+									icon={<TeamOutlined />}
+								>
+									{`Макс. гостей: ${room?.max_guests || 0}`}
+								</Tag>
 							</Space>
+							<Title level={5}>
+								Количество: {formatNumber(room?.quantity)}
+							</Title>
 						</Flex>
-						<Button
-							iconPosition={"end"}
-							type={"text"}
-							icon={<MoreOutlined style={{ fontSize: 24 }} />}
-							key={"link"}
+						<MoreButton
+							onEdit={() =>
+								navigate({
+									to: "/hotels/$hotelSlug/rooms/$roomId/edit",
+									ignoreBlocker: true,
+									params: {
+										hotelSlug,
+										roomId: `${room?.id}`
+									}
+								})
+							}
+							confirm={{
+								onConfirm: () => void 0,
+								title: `Удалить ${room?.room_type}?`,
+								content: "Вы действительно хотите удалить данный номер?"
+							}}
 						/>
 					</Flex>
 					<Flex justify={"space-between"} align={"end"}>
 						<Flex vertical={true}>
-							<Title level={3} style={{ margin: 0 }}>
-								{formatPriceWithCurrency(room?.base_price)}
+							<Title level={4} style={{ margin: 0 }}>
+								От {formatPriceWithCurrency(room?.base_price)}
 							</Title>
 							<Text type={"secondary"}>за ночь для 1 гостя</Text>
 						</Flex>
+						<Link
+							to={"/hotels/$hotelSlug/rooms/$roomId"}
+							params={{
+								hotelSlug,
+								roomId: `${room?.id}`
+							}}
+						>
+							<Button
+								type={"primary"}
+								iconPosition={"end"}
+								icon={<RightOutlined />}
+							>
+								Открыть
+							</Button>
+						</Link>
 					</Flex>
 				</Flex>
 			</List.Item>

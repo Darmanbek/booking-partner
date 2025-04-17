@@ -1,8 +1,10 @@
+import { useParams } from "@tanstack/react-router"
 import { Card, Collapse, Form, Space, Typography } from "antd"
-import { type FC, useEffect, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { useRoomsNew } from "src/pages/rooms-new/hooks"
 import { useGetAmenitiesQuery } from "src/services/amenities"
-import { useTranslation } from "src/shared/hooks"
+import { useGetRoomsByIdQuery } from "src/services/rooms"
+import { useDebounceEffect, useTranslation } from "src/shared/hooks"
 import { default as RoomsNewAmenitiesFormItem } from "./rooms-new-amenities-form-item"
 
 const { Title } = Typography
@@ -17,6 +19,14 @@ const RoomsNewAmenitiesForm: FC = () => {
 		isLoading
 	} = useGetAmenitiesQuery("room")
 
+	const { hotelSlug = "", roomId } = useParams({
+		strict: false
+	})
+	const { data: room, isLoading: roomLoading } = useGetRoomsByIdQuery(
+		hotelSlug,
+		roomId
+	)
+
 	const roomAmenities = useMemo(() => {
 		let index = 0
 		return amenities?.data?.map((item) => ({
@@ -28,19 +38,30 @@ const RoomsNewAmenitiesForm: FC = () => {
 		}))
 	}, [amenities?.data])
 
-	useEffect(() => {
+	const activeRoomAmenities = useMemo(() => {
+		if (!roomId && !room) return []
+		return (
+			room?.data?.amenities?.flatMap((item) =>
+				item?.room_amenities?.map((el) => el?.id)
+			) || []
+		)
+	}, [room, roomId])
+
+	useDebounceEffect(() => {
 		if (amenities) {
 			form.setFieldValue(
 				"amenities",
 				amenities?.data?.flatMap((item) =>
-					item?.room_amenities?.map(() => undefined)
+					item?.room_amenities?.map((el) =>
+						activeRoomAmenities?.includes(el?.id) ? el?.id : undefined
+					)
 				)
 			)
 		}
-	}, [amenities, form])
+	}, [activeRoomAmenities, amenities, form])
 	return (
 		<>
-			<Card title={"Удобства в номере"} loading={isLoading}>
+			<Card title={"Удобства в номере"} loading={isLoading || roomLoading}>
 				<Form
 					name={"rooms-new-amenities-form"}
 					form={form}

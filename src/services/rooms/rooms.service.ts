@@ -1,5 +1,6 @@
 import type {
 	GetParams,
+	ImageFile,
 	ParamId,
 	ResponseData,
 	ResponseSingleData
@@ -19,8 +20,16 @@ class RoomsService {
 	getById = async (
 		hotelSlug: ParamId,
 		id: ParamId
-	): Promise<ResponseSingleData<void>> => {
+	): Promise<ResponseSingleData<Room>> => {
 		const response = await api.get(`/hotels/${hotelSlug}/rooms/${id}`)
+		return response.data
+	}
+
+	getImagesById = async (
+		hotelSlug: ParamId,
+		id: ParamId
+	): Promise<ResponseData<ImageFile>> => {
+		const response = await api.get(`/hotels/${hotelSlug}/rooms/${id}/images`)
 		return response.data
 	}
 
@@ -40,6 +49,14 @@ class RoomsService {
 			`/hotels/${hotelSlug}/rooms/${form.id}`,
 			form
 		)
+		return response.data
+	}
+
+	deleteImageBySlug = async (
+		hotelSlug: ParamId,
+		id: ParamId
+	): Promise<ResponseSingleData<void>> => {
+		const response = await api.delete(`/hotels/${hotelSlug}/images/${id}`)
 		return response.data
 	}
 

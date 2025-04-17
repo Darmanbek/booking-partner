@@ -1,7 +1,13 @@
 import { useNavigate, useParams } from "@tanstack/react-router"
 import { Button, Flex, Form, type FormProps } from "antd"
 import { type FC, useEffect } from "react"
-import { type RoomChange, useCreateRoomsMutation } from "src/services/rooms"
+import {
+	type RoomChange,
+	useCreateRoomsMutation,
+	useEditRoomsMutation,
+	useGetRoomsByIdQuery
+} from "src/services/rooms"
+import { Loader } from "src/widgets/loader"
 import { RoomsNewContext } from "../context"
 import {
 	RoomsNewAmenitiesForm,
@@ -9,28 +15,58 @@ import {
 	RoomsNewPricesForm
 } from "./forms"
 
-const RoomsNew: FC = () => {
+interface RoomsNewProps {
+	isEdit?: boolean
+}
+
+const RoomsNew: FC<RoomsNewProps> = ({ isEdit }) => {
 	const [form] = Form.useForm<RoomChange>()
-	const { hotelSlug } = useParams({
-		from: "/_layout/hotels/$hotelSlug/_hotel-layout/rooms/new"
+	const { hotelSlug = "", roomId } = useParams({
+		strict: false
 	})
 	const navigate = useNavigate()
+
+	const { data: room, isLoading } = useGetRoomsByIdQuery(hotelSlug, roomId)
 
 	const {
 		mutate: addRoom,
 		isPending: addLoading,
-		isSuccess
+		isSuccess: addSuccess
 	} = useCreateRoomsMutation(hotelSlug)
+
+	const {
+		mutate: editRoom,
+		isPending: editLoading,
+		isSuccess: editSuccess
+	} = useEditRoomsMutation(hotelSlug)
 
 	const onFinish: FormProps<RoomChange>["onFinish"] = (values) => {
 		if (values.amenities) {
 			values.amenities = values?.amenities?.filter(Boolean)
 		}
+		if (isEdit && roomId) {
+			editRoom({
+				...values,
+				id: Number(roomId)
+			})
+			return
+		}
 		addRoom(values)
 	}
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (!isEdit) return
+		if (room?.data) {
+			form.setFieldsValue({
+				...room?.data,
+				room_type_id: room?.data?.room_type_id,
+				amenities: undefined
+			})
+		}
+	}, [isEdit, room, form])
+
+	useEffect(() => {
+		if (addSuccess || editSuccess) {
 			form.resetFields()
 			navigate({
 				to: "/hotels/$hotelSlug/rooms",
@@ -39,7 +75,8 @@ const RoomsNew: FC = () => {
 				}
 			})
 		}
-	}, [form, hotelSlug, isSuccess, navigate])
+	}, [form, hotelSlug, addSuccess, editSuccess, navigate])
+
 	return (
 		<RoomsNewContext.Provider
 			value={{
@@ -47,17 +84,18 @@ const RoomsNew: FC = () => {
 				onFinish
 			}}
 		>
+			{isEdit && <Loader loading={isLoading} />}
 			<RoomsNewInfoForm />
 			<RoomsNewAmenitiesForm />
 			<RoomsNewPricesForm />
 			<Flex justify={"center"}>
 				<Button
-					loading={addLoading}
+					loading={addLoading || editLoading}
 					type={"primary"}
 					size={"large"}
 					onClick={form.submit}
 				>
-					Создать номер
+					{isEdit ? "Изменить номер" : "Создать номер"}
 				</Button>
 			</Flex>
 		</RoomsNewContext.Provider>

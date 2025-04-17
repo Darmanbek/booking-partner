@@ -1,11 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query"
 import type { GetParams, ParamId } from "src/services/shared"
 import { useCrudMutation, useCrudQuery } from "src/shared/api"
-import { useAuth } from "src/shared/hooks"
 import { roomsService } from "./rooms.service"
 import type { RoomChange } from "./rooms.types"
 
-const useGetRoomsQuery = (params: GetParams = {}) => {
-	const { hotelSlug } = useAuth()
+const useGetRoomsQuery = (hotelSlug: ParamId, params: GetParams = {}) => {
 	return useCrudQuery({
 		queryFn: () => roomsService.get(hotelSlug, params),
 		queryKey: ["rooms", hotelSlug, ...Object.values(params)],
@@ -13,11 +12,18 @@ const useGetRoomsQuery = (params: GetParams = {}) => {
 	})
 }
 
-const useGetRoomsByIdQuery = (id: ParamId) => {
-	const { hotelSlug } = useAuth()
+const useGetRoomsByIdQuery = (hotelSlug: ParamId, id: ParamId) => {
 	return useCrudQuery({
 		queryFn: () => roomsService.getById(hotelSlug, id),
 		queryKey: ["rooms", hotelSlug, id],
+		enabled: !!id && !!hotelSlug
+	})
+}
+
+const useGetRoomsImagesByIdQuery = (hotelSlug: ParamId, id: ParamId) => {
+	return useCrudQuery({
+		queryFn: () => roomsService.getImagesById(hotelSlug, id),
+		queryKey: ["rooms", hotelSlug, id, "images"],
 		enabled: !!id && !!hotelSlug
 	})
 }
@@ -34,18 +40,31 @@ const useCreateRoomsMutation = (hotelSlug: ParamId) => {
 	})
 }
 
-const useEditRoomsMutation = () => {
-	const { hotelSlug } = useAuth()
+const useEditRoomsMutation = (hotelSlug: ParamId) => {
+	const queryClient = useQueryClient()
 	return useCrudMutation({
 		mutationFn: (form: RoomChange) => roomsService.edit(hotelSlug, form),
+		invalidate: {
+			queryKey: ["rooms", hotelSlug]
+		},
+		onSuccess: async () => {
+			await queryClient.refetchQueries({
+				queryKey: ["rooms", hotelSlug]
+			})
+		}
+	})
+}
+
+const useDeleteRoomsImageByIdMutation = (hotelSlug: ParamId) => {
+	return useCrudMutation({
+		mutationFn: (id: ParamId) => roomsService.deleteImageBySlug(hotelSlug, id),
 		invalidate: {
 			queryKey: ["rooms", hotelSlug]
 		}
 	})
 }
 
-const useDeleteRoomsMutation = () => {
-	const { hotelSlug } = useAuth()
+const useDeleteRoomsMutation = (hotelSlug: ParamId) => {
 	return useCrudMutation({
 		mutationFn: (id: ParamId) => roomsService.delete(hotelSlug, id),
 		invalidate: {
@@ -57,7 +76,9 @@ const useDeleteRoomsMutation = () => {
 export {
 	useGetRoomsQuery,
 	useGetRoomsByIdQuery,
+	useGetRoomsImagesByIdQuery,
 	useCreateRoomsMutation,
 	useEditRoomsMutation,
+	useDeleteRoomsImageByIdMutation,
 	useDeleteRoomsMutation
 }

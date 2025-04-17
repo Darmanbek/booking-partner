@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined } from "@ant-design/icons"
-import { useRouter } from "@tanstack/react-router"
+import { useParams, useRouter } from "@tanstack/react-router"
 import { Button, Card, Col, Form, InputNumber, Row, Select } from "antd"
 import { type FC } from "react"
 import { useRoomsNew } from "src/pages/rooms-new/hooks"
@@ -9,6 +9,7 @@ import { Counter } from "src/shared/ui"
 
 const RoomsNewInfoForm: FC = () => {
 	const router = useRouter()
+	const { roomId } = useParams({ strict: false })
 	const { form, onFinish } = useRoomsNew()
 
 	const { data: roomTypes, isLoading } = useGetRoomTypesQuery()
@@ -16,7 +17,7 @@ const RoomsNewInfoForm: FC = () => {
 	return (
 		<>
 			<Card
-				title={"Создание нового номера"}
+				title={roomId ? "Изменить номер" : "Создание нового номера"}
 				extra={
 					<Button
 						type={"primary"}

@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router"
+import { Link, useParams } from "@tanstack/react-router"
 import { Divider, Flex, Space } from "antd"
 import { useResponsive } from "antd-style"
 import { Header as LayoutHeader } from "antd/es/layout/layout"
@@ -33,7 +33,9 @@ const Header: FC = () => {
 		>
 			<Flex align={"center"} gap={8} justify={"space-between"}>
 				<Space>
-					<Logo collapsed={mobile} />
+					<Link to={"/hotels"}>
+						<Logo collapsed={mobile} />
+					</Link>
 					{hotel && hotelSlug && (
 						<>
 							<Divider type={"vertical"} />

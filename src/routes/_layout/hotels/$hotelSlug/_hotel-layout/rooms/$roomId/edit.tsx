@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { RoomsPage } from "src/pages/rooms"
+import { RoomsNewPage } from "src/pages/rooms-new"
 
 export const Route = createFileRoute(
-	"/_layout/hotels/$hotelSlug/_hotel-layout/rooms/"
+	"/_layout/hotels/$hotelSlug/_hotel-layout/rooms/$roomId/edit"
 )({
 	component: RouteComponent
 })
@@ -10,7 +10,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	return (
 		<>
-			<RoomsPage />
+			<RoomsNewPage isEdit={true} />
 		</>
 	)
 }

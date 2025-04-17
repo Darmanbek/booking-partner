@@ -6,50 +6,44 @@ import {
 	type InputNumberProps,
 	Space
 } from "antd"
-import { forwardRef, useEffect, useState } from "react"
+import { forwardRef } from "react"
 import { useCounterStyles } from "./counter.style"
 
 const Counter = forwardRef<HTMLInputElement, InputNumberProps>(
-	({ value, onChange, className, min = 1, max, ...rest }, ref) => {
-		const minLength = Number(min)
-
-		const [currentValue, setCurrentValue] = useState(Number(value) || minLength)
+	({ className, value, onChange, min = 1, max, ...rest }, ref) => {
 		const { styles, cx } = useCounterStyles()
 
-		useEffect(() => {
-			onChange?.(currentValue)
-		}, [currentValue, onChange])
+		const handleDecrement = () => {
+			if (typeof value !== "number") return
+			const newValue = value - 1
+			if (newValue >= Number(min)) {
+				onChange?.(newValue)
+			}
+		}
+
+		const handleIncrement = () => {
+			if (typeof value !== "number") return
+			const newValue = value + 1
+			if (max === undefined || newValue <= Number(max)) {
+				onChange?.(newValue)
+			}
+		}
+
 		return (
-			<ConfigProvider
-				wave={{
-					disabled: true
-				}}
-			>
+			<ConfigProvider wave={{ disabled: true }}>
 				<Space.Compact>
-					<Button
-						icon={<MinusOutlined />}
-						onClick={() => {
-							if (currentValue < minLength + 1) return
-							setCurrentValue((prev) => prev - 1)
-						}}
-					/>
+					<Button icon={<MinusOutlined />} onClick={handleDecrement} />
 					<InputNumber
 						controls={false}
-						defaultValue={1}
-						onChange={(value) => setCurrentValue(Number(value) || minLength)}
 						className={cx(styles.input, className)}
-						value={currentValue}
 						ref={ref}
+						value={value}
+						onChange={onChange}
+						min={min}
+						max={max}
 						{...rest}
 					/>
-					<Button
-						icon={<PlusOutlined />}
-						onClick={() =>
-							setCurrentValue((prev) =>
-								max && prev >= Number(max) ? prev : prev + 1
-							)
-						}
-					/>
+					<Button icon={<PlusOutlined />} onClick={handleIncrement} />
 				</Space.Compact>
 			</ConfigProvider>
 		)
