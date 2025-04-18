@@ -4,7 +4,7 @@ import type { TranslateName } from "src/services/shared"
 
 export type Booking = {
 	id: number
-	status: string
+	status: "booked" | "cancelled" | "completed"
 	check_in_date: string
 	check_out_date: string
 	total_price: number

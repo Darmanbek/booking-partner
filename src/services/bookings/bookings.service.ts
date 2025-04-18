@@ -1,7 +1,7 @@
 import type {
 	GetParams,
 	ParamId,
-	ResponseData,
+	Response,
 	ResponseSingleData
 } from "src/services/shared"
 import { api } from "src/shared/api"
@@ -11,7 +11,7 @@ class BookingsService {
 	get = async (
 		hotelSlug: ParamId,
 		params: GetParams = {}
-	): Promise<ResponseData<Booking>> => {
+	): Promise<Response<Booking>> => {
 		const response = await api.get(`/partners/hotels/${hotelSlug}/bookings`, {
 			params
 		})

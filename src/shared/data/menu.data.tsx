@@ -17,9 +17,9 @@ export const menuData: MenuItem[] = [
 		label: "Отель"
 	},
 	{
-		key: "/hotels/$hotelSlug/availability-prices",
+		key: "/hotels/$hotelSlug/availability",
 		icon: <InsertRowAboveOutlined />,
-		label: "Доступность и цены"
+		label: "Доступность"
 	},
 	{
 		key: "/hotels/$hotelSlug/orders",

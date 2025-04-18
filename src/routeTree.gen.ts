@@ -24,7 +24,7 @@ import { Route as LayoutHotelsHotelsLayoutIndexImport } from "./routes/_layout/h
 import { Route as LayoutHotelsHotelsLayoutRegisterImport } from "./routes/_layout/hotels/_hotels-layout/register"
 import { Route as LayoutHotelsHotelSlugHotelLayoutImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout"
 import { Route as LayoutHotelsHotelSlugHotelLayoutOrdersImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/orders"
-import { Route as LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices"
+import { Route as LayoutHotelsHotelSlugHotelLayoutAvailabilityImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/availability"
 import { Route as LayoutHotelsHotelSlugHotelLayoutRoomsIndexImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/rooms/index"
 import { Route as LayoutHotelsHotelSlugHotelLayoutRoomsNewImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/rooms/new"
 import { Route as LayoutHotelsHotelSlugHotelLayoutPaymentsPaymentsLayoutImport } from "./routes/_layout/hotels/$hotelSlug/_hotel-layout/payments/_payments-layout"
@@ -150,10 +150,10 @@ const LayoutHotelsHotelSlugHotelLayoutOrdersRoute =
     getParentRoute: () => LayoutHotelsHotelSlugHotelLayoutRoute,
   } as any)
 
-const LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute =
-  LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesImport.update({
-    id: "/availability-prices",
-    path: "/availability-prices",
+const LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute =
+  LayoutHotelsHotelSlugHotelLayoutAvailabilityImport.update({
+    id: "/availability",
+    path: "/availability",
     getParentRoute: () => LayoutHotelsHotelSlugHotelLayoutRoute,
   } as any)
 
@@ -334,11 +334,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutHotelsHotelsLayoutIndexImport
       parentRoute: typeof LayoutHotelsHotelsLayoutImport
     }
-    "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices": {
-      id: "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices"
-      path: "/availability-prices"
-      fullPath: "/hotels/$hotelSlug/availability-prices"
-      preLoaderRoute: typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesImport
+    "/_layout/hotels/$hotelSlug/_hotel-layout/availability": {
+      id: "/_layout/hotels/$hotelSlug/_hotel-layout/availability"
+      path: "/availability"
+      fullPath: "/hotels/$hotelSlug/availability"
+      preLoaderRoute: typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityImport
       parentRoute: typeof LayoutHotelsHotelSlugHotelLayoutImport
     }
     "/_layout/hotels/$hotelSlug/_hotel-layout/orders": {
@@ -531,7 +531,7 @@ const LayoutHotelsHotelSlugHotelLayoutPaymentsRouteWithChildren =
   )
 
 interface LayoutHotelsHotelSlugHotelLayoutRouteChildren {
-  LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute: typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute
+  LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute: typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute
   LayoutHotelsHotelSlugHotelLayoutOrdersRoute: typeof LayoutHotelsHotelSlugHotelLayoutOrdersRoute
   LayoutHotelsHotelSlugHotelLayouthotelInfoRoute: typeof LayoutHotelsHotelSlugHotelLayouthotelInfoRouteWithChildren
   LayoutHotelsHotelSlugHotelLayoutPaymentsRoute: typeof LayoutHotelsHotelSlugHotelLayoutPaymentsRouteWithChildren
@@ -543,8 +543,8 @@ interface LayoutHotelsHotelSlugHotelLayoutRouteChildren {
 
 const LayoutHotelsHotelSlugHotelLayoutRouteChildren: LayoutHotelsHotelSlugHotelLayoutRouteChildren =
   {
-    LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute:
-      LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute,
+    LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute:
+      LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute,
     LayoutHotelsHotelSlugHotelLayoutOrdersRoute:
       LayoutHotelsHotelSlugHotelLayoutOrdersRoute,
     LayoutHotelsHotelSlugHotelLayouthotelInfoRoute:
@@ -644,7 +644,7 @@ export interface FileRoutesByFullPath {
   "/hotels/$hotelSlug": typeof LayoutHotelsHotelSlugHotelLayoutRouteWithChildren
   "/hotels/register": typeof LayoutHotelsHotelsLayoutRegisterRoute
   "/hotels/": typeof LayoutHotelsHotelsLayoutIndexRoute
-  "/hotels/$hotelSlug/availability-prices": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute
+  "/hotels/$hotelSlug/availability": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute
   "/hotels/$hotelSlug/orders": typeof LayoutHotelsHotelSlugHotelLayoutOrdersRoute
   "/hotels/$hotelSlug/": typeof LayoutHotelsHotelSlugHotelLayouthotelInfoHotelInfoLayoutIndexRoute
   "/hotels/$hotelSlug/payments": typeof LayoutHotelsHotelSlugHotelLayoutPaymentsPaymentsLayoutRouteWithChildren
@@ -666,7 +666,7 @@ export interface FileRoutesByTo {
   "/auth/register": typeof AuthAuthLayoutRegisterRoute
   "/hotels/$hotelSlug": typeof LayoutHotelsHotelSlugHotelLayouthotelInfoHotelInfoLayoutIndexRoute
   "/hotels/register": typeof LayoutHotelsHotelsLayoutRegisterRoute
-  "/hotels/$hotelSlug/availability-prices": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute
+  "/hotels/$hotelSlug/availability": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute
   "/hotels/$hotelSlug/orders": typeof LayoutHotelsHotelSlugHotelLayoutOrdersRoute
   "/hotels/$hotelSlug/payments": typeof LayoutHotelsHotelSlugHotelLayoutPaymentsPaymentsLayoutIndexRoute
   "/hotels/$hotelSlug/rooms/new": typeof LayoutHotelsHotelSlugHotelLayoutRoomsNewRoute
@@ -693,7 +693,7 @@ export interface FileRoutesById {
   "/_layout/hotels/$hotelSlug/_hotel-layout": typeof LayoutHotelsHotelSlugHotelLayoutRouteWithChildren
   "/_layout/hotels/_hotels-layout/register": typeof LayoutHotelsHotelsLayoutRegisterRoute
   "/_layout/hotels/_hotels-layout/": typeof LayoutHotelsHotelsLayoutIndexRoute
-  "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityPricesRoute
+  "/_layout/hotels/$hotelSlug/_hotel-layout/availability": typeof LayoutHotelsHotelSlugHotelLayoutAvailabilityRoute
   "/_layout/hotels/$hotelSlug/_hotel-layout/orders": typeof LayoutHotelsHotelSlugHotelLayoutOrdersRoute
   "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)": typeof LayoutHotelsHotelSlugHotelLayouthotelInfoRouteWithChildren
   "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)/_hotel-info-layout": typeof LayoutHotelsHotelSlugHotelLayouthotelInfoHotelInfoLayoutRouteWithChildren
@@ -723,7 +723,7 @@ export interface FileRouteTypes {
     | "/hotels/$hotelSlug"
     | "/hotels/register"
     | "/hotels/"
-    | "/hotels/$hotelSlug/availability-prices"
+    | "/hotels/$hotelSlug/availability"
     | "/hotels/$hotelSlug/orders"
     | "/hotels/$hotelSlug/"
     | "/hotels/$hotelSlug/payments"
@@ -744,7 +744,7 @@ export interface FileRouteTypes {
     | "/auth/register"
     | "/hotels/$hotelSlug"
     | "/hotels/register"
-    | "/hotels/$hotelSlug/availability-prices"
+    | "/hotels/$hotelSlug/availability"
     | "/hotels/$hotelSlug/orders"
     | "/hotels/$hotelSlug/payments"
     | "/hotels/$hotelSlug/rooms/new"
@@ -769,7 +769,7 @@ export interface FileRouteTypes {
     | "/_layout/hotels/$hotelSlug/_hotel-layout"
     | "/_layout/hotels/_hotels-layout/register"
     | "/_layout/hotels/_hotels-layout/"
-    | "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices"
+    | "/_layout/hotels/$hotelSlug/_hotel-layout/availability"
     | "/_layout/hotels/$hotelSlug/_hotel-layout/orders"
     | "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)"
     | "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)/_hotel-info-layout"
@@ -876,7 +876,7 @@ export const routeTree = rootRoute
       "filePath": "_layout/hotels/$hotelSlug/_hotel-layout.tsx",
       "parent": "/_layout/hotels/$hotelSlug",
       "children": [
-        "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices",
+        "/_layout/hotels/$hotelSlug/_hotel-layout/availability",
         "/_layout/hotels/$hotelSlug/_hotel-layout/orders",
         "/_layout/hotels/$hotelSlug/_hotel-layout/(hotel-info)",
         "/_layout/hotels/$hotelSlug/_hotel-layout/payments",
@@ -894,8 +894,8 @@ export const routeTree = rootRoute
       "filePath": "_layout/hotels/_hotels-layout/index.tsx",
       "parent": "/_layout/hotels/_hotels-layout"
     },
-    "/_layout/hotels/$hotelSlug/_hotel-layout/availability-prices": {
-      "filePath": "_layout/hotels/$hotelSlug/_hotel-layout/availability-prices.tsx",
+    "/_layout/hotels/$hotelSlug/_hotel-layout/availability": {
+      "filePath": "_layout/hotels/$hotelSlug/_hotel-layout/availability.tsx",
       "parent": "/_layout/hotels/$hotelSlug/_hotel-layout"
     },
     "/_layout/hotels/$hotelSlug/_hotel-layout/orders": {

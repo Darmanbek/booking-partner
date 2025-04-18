@@ -1,4 +1,10 @@
-import { CheckOutlined, MoonFilled, UserOutlined } from "@ant-design/icons"
+import {
+	CheckOutlined,
+	ExclamationCircleFilled,
+	MoonFilled,
+	SyncOutlined,
+	UserOutlined
+} from "@ant-design/icons"
 import { Flex, Space, Typography } from "antd"
 import Avatar from "antd/es/avatar"
 import type { ColumnsType } from "antd/es/table"
@@ -15,11 +21,23 @@ export const useOrdersTableColumns = () => {
 			title: "Бронирование",
 			dataIndex: "id",
 			key: "id",
-			render: (value, record) => (
+			render: (_v, record) => (
 				<Flex vertical={true}>
 					<Space>
-						<CheckOutlined style={{ color: "green" }} />
-						<Typography.Title level={5}>{value}</Typography.Title>
+						{record?.status === "booked" ? (
+							<>
+								<SyncOutlined spin={true} style={{ color: "blue" }} />
+							</>
+						) : record?.status === "completed" ? (
+							<>
+								<CheckOutlined style={{ color: "green" }} />
+							</>
+						) : (
+							<>
+								<ExclamationCircleFilled style={{ color: "orange" }} />
+							</>
+						)}
+						<Typography.Title level={5}>{t(record?.status)}</Typography.Title>
 					</Space>
 					<Typography.Text type={"secondary"}>
 						{`Создано: ${record.created_at}`}
@@ -46,9 +64,9 @@ export const useOrdersTableColumns = () => {
 			)
 		},
 		{
-			title: "Номер",
-			dataIndex: "room_type",
-			key: "room_type"
+			title: "Номера",
+			dataIndex: "rooms_count",
+			key: "rooms_count"
 		},
 		{
 			title: "Даты проживания",
