@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import { useParams, useRouter } from "@tanstack/react-router"
 import { Button, Card, Col, Form, InputNumber, Row, Select } from "antd"
+import { useResponsive } from "antd-style"
 import { type FC } from "react"
 import { useRoomsNew } from "src/pages/rooms-new/hooks"
 import { useGetRoomTypesQuery } from "src/services/room-types"
@@ -9,6 +10,7 @@ import { Counter } from "src/shared/ui"
 
 const RoomsNewInfoForm: FC = () => {
 	const router = useRouter()
+	const { sm = true } = useResponsive()
 	const { roomId } = useParams({ strict: false })
 	const { form, onFinish } = useRoomsNew()
 
@@ -24,7 +26,7 @@ const RoomsNewInfoForm: FC = () => {
 						icon={<ArrowLeftOutlined />}
 						onClick={() => router.history.back()}
 					>
-						Назад
+						{sm ? "Назад" : ""}
 					</Button>
 				}
 			>

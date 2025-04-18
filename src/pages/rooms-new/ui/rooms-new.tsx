@@ -21,6 +21,7 @@ interface RoomsNewProps {
 
 const RoomsNew: FC<RoomsNewProps> = ({ isEdit }) => {
 	const [form] = Form.useForm<RoomChange>()
+
 	const { hotelSlug = "", roomId } = useParams({
 		strict: false
 	})
