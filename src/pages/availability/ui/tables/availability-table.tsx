@@ -21,7 +21,8 @@ const AvailabilityTable: FC = () => {
 		}))
 	)
 	const [date, setDate] = useState(() => dayjs())
-
+	// console.log(date.startOf("month").format("YYYY-MM-DD"))
+	// console.log(date.endOf("month").format("YYYY-MM-DD"))
 	const onChangeDays = (date: number, value: boolean) => {
 		setDays((prev) =>
 			prev.map((el) => ({

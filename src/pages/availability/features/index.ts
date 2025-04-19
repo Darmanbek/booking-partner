@@ -1,1 +1,1 @@
-export * from "./availability-button"
+export { default as AvailabilityButton } from "./availability-button"

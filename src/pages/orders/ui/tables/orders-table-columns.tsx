@@ -102,6 +102,7 @@ export const useOrdersTableColumns = () => {
 			)
 		},
 		{
+			width: 50,
 			title: "",
 			key: "actions",
 			render: () => (

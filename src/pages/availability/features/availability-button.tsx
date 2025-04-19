@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router"
 import { Dropdown } from "antd"
 import Button from "antd/es/button"
-import { type FC, useMemo } from "react"
+import { type FC, memo, useMemo } from "react"
 import {
 	type Chessboard,
 	useCreateChessboardMutation
@@ -82,4 +82,4 @@ const AvailabilityButton: FC<AvailabilityButtonProps> = ({
 	)
 }
 
-export { AvailabilityButton }
+export default memo(AvailabilityButton)

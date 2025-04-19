@@ -1,20 +1,20 @@
-import { Space } from "antd"
+import { Divider, type GlobalToken, Space, Tag } from "antd"
 import type { ColumnsType } from "antd/es/table"
+import Typography from "antd/es/typography"
 import { type Dayjs } from "dayjs"
+import { useMemo } from "react"
 import { AvailabilityButton } from "src/pages/availability/features"
 import type { Chessboard } from "src/services/chessboard"
 import { type Room } from "src/services/rooms"
 import { useToken } from "src/shared/hooks"
 
-export const useAvailabilityTableColumns = (
-	date: Dayjs,
+const generateCalendarColumns = (
+	start: Dayjs,
+	days: number,
 	disabledDays: number[],
+	token: GlobalToken,
 	chessboard?: Chessboard[]
 ) => {
-	const start = date.startOf("month")
-	const days = date.daysInMonth()
-	const { token } = useToken()
-
 	const columns: ColumnsType<Room> = Array.from({ length: days }).map(
 		(_, index) => {
 			const date = start.add(index, "day")
@@ -41,16 +41,41 @@ export const useAvailabilityTableColumns = (
 						: {}
 				}),
 				render: (_v, record) => (
-					<AvailabilityButton
-						data={{
-							room: record,
-							date: date.format("YYYY-MM-DD"),
-							chessRoom: chessboard?.find((el) => el?.room_id === record?.id)
-						}}
-					/>
+					<Space
+						direction={"vertical"}
+						split={<Divider style={{ margin: 0 }} type={"horizontal"} />}
+					>
+						<AvailabilityButton
+							data={{
+								room: record,
+								date: date.format("YYYY-MM-DD"),
+								chessRoom: chessboard?.find((el) => el?.room_id === record?.id)
+							}}
+						/>
+						<Tag color={"blue"} style={{ margin: "0 auto" }}>
+							10
+						</Tag>
+					</Space>
 				)
 			}
 		}
+	)
+
+	return columns
+}
+
+export const useAvailabilityTableColumns = (
+	date: Dayjs,
+	disabledDays: number[],
+	chessboard?: Chessboard[]
+) => {
+	const start = date.startOf("month")
+	const days = date.daysInMonth()
+	const { token } = useToken()
+
+	const columns: ColumnsType<Room> = useMemo(
+		() => generateCalendarColumns(start, days, disabledDays, token, chessboard),
+		[chessboard, days, disabledDays, start, token]
 	)
 
 	columns.unshift({
@@ -58,7 +83,24 @@ export const useAvailabilityTableColumns = (
 		key: "rooms",
 		dataIndex: "room_type",
 		rowScope: "row",
-		fixed: "left"
+		onCell: () => ({
+			style: {
+				fontSize: 12,
+				width: 100
+			}
+		}),
+		fixed: "left",
+		render: (value) => (
+			<Space
+				direction={"vertical"}
+				split={<Divider style={{ margin: 0 }} type={"horizontal"} />}
+			>
+				{value}
+				<Typography.Text style={{ fontSize: 11 }} type={"secondary"}>
+					(Активные брони)
+				</Typography.Text>
+			</Space>
+		)
 	})
 
 	return columns.filter((el) => el?.key)

@@ -1,8 +1,9 @@
-import { Card, Collapse, Form, Radio, Space, Typography } from "antd"
+import { Card, Collapse, Form, Space, Typography } from "antd"
 import { type FC, useEffect, useMemo } from "react"
 import { useHotelsRegister } from "src/pages/hotels-register/hooks"
 import { useGetAmenitiesQuery } from "src/services/amenities"
 import { useTranslation } from "src/shared/hooks"
+import { default as HotelsAmenitiesFormItem } from "./hotels-amenities-form-item"
 
 const { Title } = Typography
 
@@ -16,19 +17,27 @@ const HotelsAmenitiesForm: FC = () => {
 		[amenities?.data]
 	)
 
-	const formAmenities =
-		(Form.useWatch("amenities", form) as (number | undefined)[]) || []
+	const hotelAmenities = useMemo(() => {
+		let index = 0
+		return filteredAmenities?.map((item) => ({
+			...item,
+			hotel_amenities: item?.hotel_amenities?.map((el) => ({
+				...el,
+				key: index++
+			}))
+		}))
+	}, [filteredAmenities])
 
 	useEffect(() => {
-		if (filteredAmenities) {
+		if (hotelAmenities) {
 			form.setFieldValue(
 				"amenities",
-				filteredAmenities.flatMap((item) =>
+				hotelAmenities.flatMap((item) =>
 					item?.hotel_amenities?.map(() => undefined)
 				)
 			)
 		}
-	}, [filteredAmenities, form])
+	}, [hotelAmenities, form])
 	return (
 		<>
 			<Card title={"Удобства"} loading={isLoading}>
@@ -45,8 +54,8 @@ const HotelsAmenitiesForm: FC = () => {
 							<Collapse
 								ghost={true}
 								expandIconPosition={"end"}
-								defaultActiveKey={filteredAmenities.map((_, index) => index)}
-								items={filteredAmenities.map((item, index) => ({
+								defaultActiveKey={hotelAmenities.map((_, index) => index)}
+								items={hotelAmenities.map((item, index) => ({
 									key: index,
 									label: (
 										<Title style={{ fontSize: "inherit" }}>
@@ -57,32 +66,11 @@ const HotelsAmenitiesForm: FC = () => {
 										<Space wrap={true}>
 											{item?.hotel_amenities?.map((item, index) => {
 												return (
-													<Form.Item key={index} name={[index]}>
-														<Radio.Button
-															key={index}
-															value={item?.id}
-															checked={
-																!!formAmenities?.find((el) => el === item?.id)
-															}
-															onClick={() => {
-																if (
-																	formAmenities?.find((el) => el === item?.id)
-																) {
-																	form.setFieldValue(
-																		["amenities", index],
-																		undefined
-																	)
-																	return
-																}
-																form.setFieldValue(
-																	["amenities", index],
-																	item?.id
-																)
-															}}
-														>
-															{t(item.name)}
-														</Radio.Button>
-													</Form.Item>
+													<HotelsAmenitiesFormItem
+														key={index}
+														data={item}
+														field={item?.key}
+													/>
 												)
 											})}
 										</Space>
