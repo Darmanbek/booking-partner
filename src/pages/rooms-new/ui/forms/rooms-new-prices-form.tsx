@@ -52,7 +52,7 @@ const RoomsNewPricesForm: FC = () => {
 							<Col xs={24} md={12}>
 								<Form.Item<RoomChange>
 									name={"base_price"}
-									label={"Базовая цена для 1 гостя"}
+									label={"Базовая цена"}
 									rules={[{ required: true }]}
 								>
 									<InputNumber
@@ -70,14 +70,16 @@ const RoomsNewPricesForm: FC = () => {
 										{fields.map((field, index) => (
 											<Form.Item key={index} noStyle={true}>
 												<Form.Item
-													name={[field.name, "quest_quantity"]}
+													name={[field.name, "guest_quantity"]}
 													hidden={true}
+													rules={[{ required: true }]}
 												>
 													<Input hidden={true} />
 												</Form.Item>
 												<Form.Item
 													help={`Гость: ${field.name + 1}`}
 													name={[field.name, "price"]}
+													rules={[{ required: true }]}
 												>
 													<InputNumber
 														placeholder={`5000`}

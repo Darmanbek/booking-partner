@@ -29,7 +29,7 @@ export type RoomChange = {
 	room_type_id: number
 	amenities: number[]
 	room_prices: {
-		quest_quantity: number
+		guest_quantity: number
 		price: number
 	}[]
 	use_dinamic_price: boolean

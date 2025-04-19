@@ -5,7 +5,8 @@ import {
 	MoreOutlined
 } from "@ant-design/icons"
 import { App, Button, Dropdown } from "antd"
-import { FC, ReactNode, useCallback, useMemo } from "react"
+import type { MenuItemType } from "antd/es/menu/interface"
+import { type FC, type ReactNode, useCallback, useMemo } from "react"
 
 interface MoreButtonProps {
 	onEdit?: () => void
@@ -35,19 +36,12 @@ const MoreButton: FC<MoreButtonProps> = ({ onEdit, confirm, onOpen }) => {
 	}, [confirm, modal])
 
 	const menuItems = useMemo(() => {
-		const items = [
+		const items: MenuItemType[] = [
 			{
 				key: "edit",
 				label: "Изменить",
 				icon: <EditFilled />,
 				onClick: onEdit
-			},
-			{
-				key: "delete",
-				danger: true,
-				label: "Удалить",
-				icon: <DeleteOutlined />,
-				onClick: onDelete
 			}
 		]
 
@@ -60,8 +54,18 @@ const MoreButton: FC<MoreButtonProps> = ({ onEdit, confirm, onOpen }) => {
 			})
 		}
 
+		if (confirm) {
+			items.push({
+				key: "delete",
+				danger: true,
+				label: "Удалить",
+				icon: <DeleteOutlined />,
+				onClick: onDelete
+			})
+		}
+
 		return items
-	}, [onDelete, onEdit, onOpen])
+	}, [confirm, onDelete, onEdit, onOpen])
 
 	return (
 		<>
