@@ -4,18 +4,16 @@ import Typography from "antd/es/typography"
 import { type Dayjs } from "dayjs"
 import { useMemo } from "react"
 import { AvailabilityButton } from "src/pages/availability/features"
-import type { Chessboard } from "src/services/chessboard"
-import { type Room } from "src/services/rooms"
 import { useToken } from "src/shared/hooks"
+import type { DataRoom } from "../ui/tables"
 
 const generateCalendarColumns = (
 	start: Dayjs,
 	days: number,
 	disabledDays: number[],
-	token: GlobalToken,
-	chessboard?: Chessboard[]
+	token: GlobalToken
 ) => {
-	const columns: ColumnsType<Room> = Array.from({ length: days }).map(
+	const columns: ColumnsType<DataRoom> = Array.from({ length: days }).map(
 		(_, index) => {
 			const date = start.add(index, "day")
 			if (!disabledDays.includes(date.get("day"))) return {}
@@ -49,7 +47,7 @@ const generateCalendarColumns = (
 							data={{
 								room: record,
 								date: date.format("YYYY-MM-DD"),
-								chessRoom: chessboard?.find((el) => el?.room_id === record?.id)
+								chessboard: record?.chessboard
 							}}
 						/>
 						<Tag color={"blue"} style={{ margin: "0 auto" }}>
@@ -66,16 +64,15 @@ const generateCalendarColumns = (
 
 export const useAvailabilityTableColumns = (
 	date: Dayjs,
-	disabledDays: number[],
-	chessboard?: Chessboard[]
+	disabledDays: number[]
 ) => {
 	const start = date.startOf("month")
 	const days = date.daysInMonth()
 	const { token } = useToken()
 
-	const columns: ColumnsType<Room> = useMemo(
-		() => generateCalendarColumns(start, days, disabledDays, token, chessboard),
-		[chessboard, days, disabledDays, start, token]
+	const columns: ColumnsType<DataRoom> = useMemo(
+		() => generateCalendarColumns(start, days, disabledDays, token),
+		[days, disabledDays, start, token]
 	)
 
 	columns.unshift({

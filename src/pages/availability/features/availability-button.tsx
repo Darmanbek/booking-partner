@@ -12,31 +12,35 @@ import { formatNumber } from "src/shared/utils"
 interface AvailabilityButtonProps {
 	data: {
 		room?: Room
-		chessRoom?: Chessboard
 		date: string
+		chessboard?: Chessboard
 	}
 }
 
 const AvailabilityButton: FC<AvailabilityButtonProps> = ({
-	data: { room, chessRoom, date }
+	data: { room, date, chessboard }
 }) => {
 	const { hotelSlug } = useParams({
 		from: "/_layout/hotels/$hotelSlug/_hotel-layout/availability"
 	})
+
+	const chessRoomQuantity = useMemo(() => {
+		if (!chessboard) return
+		const item = chessboard?.chessboard_items?.find(
+			(el) => el.check_date === date
+		)
+		return item?.available_rooms_count
+	}, [chessboard, date])
+
 	const currentQuantity = useMemo(() => {
-		if (chessRoom) {
-			const item = chessRoom?.chessboard_items?.find(
-				(el) => el.check_date === date
-			)
-			if (item?.available_rooms_count !== undefined) {
-				return item?.available_rooms_count
-			}
+		if (chessRoomQuantity !== undefined) {
+			return chessRoomQuantity
 		}
 		if (room?.quantity) {
 			return room?.quantity
 		}
 		return 0
-	}, [chessRoom, date, room?.quantity])
+	}, [chessRoomQuantity, room?.quantity])
 
 	const { mutate: addChessboard, isPending } =
 		useCreateChessboardMutation(hotelSlug)
