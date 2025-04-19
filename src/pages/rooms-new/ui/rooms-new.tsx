@@ -45,6 +45,7 @@ const RoomsNew: FC<RoomsNewProps> = ({ isEdit }) => {
 		if (values.amenities) {
 			values.amenities = values?.amenities?.filter(Boolean)
 		}
+		values["use_dinamic_price"] = !values["use_dinamic_price"]
 		if (isEdit && roomId) {
 			editRoom({
 				...values,
@@ -61,7 +62,8 @@ const RoomsNew: FC<RoomsNewProps> = ({ isEdit }) => {
 			form.setFieldsValue({
 				...room?.data,
 				room_type_id: room?.data?.room_type_id,
-				amenities: undefined
+				amenities: undefined,
+				use_dinamic_price: !room?.data?.use_dinamic_price
 			})
 		}
 	}, [isEdit, room, form])

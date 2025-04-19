@@ -32,7 +32,6 @@ function useReverseGeocode(lat: number, lon: number, delay = 500) {
 						}
 					)
 					const data = await res.data
-					console.log(data)
 					setAddress(data.display_name)
 				} catch (err) {
 					console.error("Ошибка геокодинга:", err)

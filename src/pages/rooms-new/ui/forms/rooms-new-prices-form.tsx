@@ -16,7 +16,7 @@ const RoomsNewPricesForm: FC = () => {
 			form.setFieldValue(
 				"room_prices",
 				Array.from({ length: maxGuests }).map((_, index) => ({
-					quest_quantity: index + 1
+					guest_quantity: index + 1
 				}))
 			)
 		}
@@ -53,7 +53,7 @@ const RoomsNewPricesForm: FC = () => {
 								<Form.Item<RoomChange>
 									name={"base_price"}
 									label={"Базовая цена"}
-									rules={[{ required: true }]}
+									rules={[{ required: isDinamicPrice }]}
 								>
 									<InputNumber
 										style={{ width: "100%" }}
