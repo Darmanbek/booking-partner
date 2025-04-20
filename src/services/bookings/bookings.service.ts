@@ -5,7 +5,7 @@ import type {
 	ResponseSingleData
 } from "src/services/shared"
 import { api } from "src/shared/api"
-import { Booking, BookingChange } from "./bookings.types"
+import type { Booking, BookingChange } from "./bookings.types"
 
 class BookingsService {
 	get = async (

@@ -1,4 +1,4 @@
-import { Amenity } from "src/services/amenities"
+import type { Amenity } from "src/services/amenities"
 import type {
 	GetParams,
 	ImageFile,
