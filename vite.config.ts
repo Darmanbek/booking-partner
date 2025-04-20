@@ -18,6 +18,9 @@ export default defineConfig({
 			open: true
 		})
 	],
+	build: {
+		target: "es-next"
+	},
 	resolve: {
 		alias: {
 			src: path.resolve(__dirname, "./src")
