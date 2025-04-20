@@ -20,7 +20,7 @@ const HotelsAmenitiesFormItem: FC<HotelsAmenitiesFormItemProps> = ({
 
 	return (
 		<>
-			<Form.Item>
+			<Form.Item noStyle={true}>
 				<Form.Item name={[field]} hidden={true}>
 					<Input hidden={true} />
 				</Form.Item>

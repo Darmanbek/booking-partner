@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query"
 import { hotelsService } from "src/services/hotels/hotels.service"
 import type { GetParams, ParamId } from "src/services/shared"
 import { useCrudMutation, useCrudQuery } from "src/shared/api"
@@ -57,8 +58,17 @@ const useCreateHotelsMutation = () => {
 }
 
 const useEditHotelsMutation = () => {
+	const queryClient = useQueryClient()
 	return useCrudMutation({
 		mutationFn: hotelsService.edit,
+		renderSuccess: () => ({
+			description: "Отель успешно изменен"
+		}),
+		onSuccess: () => {
+			queryClient.removeQueries({
+				queryKey: ["hotels"]
+			})
+		},
 		invalidate: {
 			queryKey: ["hotels"]
 		}

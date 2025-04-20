@@ -1,8 +1,10 @@
+import { useParams } from "@tanstack/react-router"
 import { Card, Collapse, Form, Space, Typography } from "antd"
-import { type FC, useEffect, useMemo } from "react"
+import { type FC, useMemo } from "react"
 import { useHotelsRegister } from "src/pages/hotels-register/hooks"
 import { useGetAmenitiesQuery } from "src/services/amenities"
-import { useTranslation } from "src/shared/hooks"
+import { useGetHotelsAmenitiesBySlugQuery } from "src/services/hotels"
+import { useDebounceEffect, useTranslation } from "src/shared/hooks"
 import { default as HotelsAmenitiesFormItem } from "./hotels-amenities-form-item"
 
 const { Title } = Typography
@@ -10,11 +12,17 @@ const { Title } = Typography
 const HotelsAmenitiesForm: FC = () => {
 	const { form, onFinish } = useHotelsRegister()
 	const { t } = useTranslation()
+	const { hotelSlug } = useParams({
+		strict: false
+	})
+	const { data: hotel } = useGetHotelsAmenitiesBySlugQuery(hotelSlug)
 	const { data: amenities, isLoading } = useGetAmenitiesQuery()
 
 	const filteredAmenities = useMemo(
-		() => amenities?.data.filter((_, index) => index < 1) || [],
-		[amenities?.data]
+		() =>
+			amenities?.data.filter((_, index) => (hotelSlug ? true : index < 1)) ||
+			[],
+		[amenities?.data, hotelSlug]
 	)
 
 	const hotelAmenities = useMemo(() => {
@@ -28,16 +36,27 @@ const HotelsAmenitiesForm: FC = () => {
 		}))
 	}, [filteredAmenities])
 
-	useEffect(() => {
+	const activeHotelAmenities = useMemo(() => {
+		if (!hotelSlug && !hotel) return []
+		return (
+			hotel?.data?.flatMap((item) =>
+				item?.hotel_amenities?.map((el) => el?.id)
+			) || []
+		)
+	}, [hotel, hotelSlug])
+
+	useDebounceEffect(() => {
 		if (hotelAmenities) {
 			form.setFieldValue(
 				"amenities",
 				hotelAmenities.flatMap((item) =>
-					item?.hotel_amenities?.map(() => undefined)
+					item?.hotel_amenities?.map((el) =>
+						activeHotelAmenities?.includes(el?.id) ? el?.id : undefined
+					)
 				)
 			)
 		}
-	}, [hotelAmenities, form])
+	}, [hotelAmenities, form, activeHotelAmenities])
 	return (
 		<>
 			<Card title={"Удобства"} loading={isLoading}>

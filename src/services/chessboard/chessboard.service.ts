@@ -5,7 +5,11 @@ import type {
 	ResponseSingleData
 } from "src/services/shared"
 import { api } from "src/shared/api"
-import type { Chessboard, ChessboardChange } from "./chessboard.types"
+import type {
+	Chessboard,
+	ChessboardActiveBooking,
+	ChessboardChange
+} from "./chessboard.types"
 
 class ChessboardService {
 	get = async (
@@ -15,6 +19,19 @@ class ChessboardService {
 		const response = await api.get(`/hotels/${hotelSlug}/chessboard`, {
 			params
 		})
+		return response.data
+	}
+
+	getActiveBookings = async (
+		hotelSlug: ParamId,
+		params: GetParams = {}
+	): Promise<ResponseData<ChessboardActiveBooking>> => {
+		const response = await api.get(
+			`/hotels/${hotelSlug}/chessboard/active-bookings`,
+			{
+				params
+			}
+		)
 		return response.data
 	}
 

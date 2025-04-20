@@ -1,3 +1,4 @@
+import type { Dayjs } from "dayjs"
 import type { Category } from "src/services/categories"
 import type { Partner } from "src/services/partners"
 import type {
@@ -13,6 +14,7 @@ export type Hotel = {
 	name: TranslateName
 	description: TranslateName
 	category: TranslateName
+	category_id: number
 	hotel_admin_id: number
 	is_active: boolean
 	images: ImageFile[]
@@ -44,6 +46,7 @@ export type HotelLocation = {
 	address: string
 	city: string
 	city_slug: string
+	city_id: number
 	coordinates: Coordinates
 	latitude: number
 	longitude: number
@@ -92,8 +95,8 @@ export type HotelChange = {
 	latitude: number
 	longitude: number
 	amenities: number[]
-	check_in: string
-	check_out: string
+	check_in: string | Dayjs
+	check_out: string | Dayjs
 	star_rating: number
 	email_for_guests: string
 	first_phone_for_guests: string

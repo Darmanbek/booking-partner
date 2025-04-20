@@ -1,5 +1,5 @@
 import { RightOutlined } from "@ant-design/icons"
-import { Link } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
 import { Button, Card, Image, List, Rate, Typography } from "antd"
 import Flex from "antd/es/flex"
 import { type FC } from "react"
@@ -13,6 +13,8 @@ interface HotelsListItemProps {
 }
 
 const HotelsListItem: FC<HotelsListItemProps> = ({ data: hotel }) => {
+	const navigate = useNavigate()
+	
 	return (
 		<>
 			<Card
@@ -48,7 +50,12 @@ const HotelsListItem: FC<HotelsListItemProps> = ({ data: hotel }) => {
 									)}
 								</div>
 							</Flex>
-							<MoreButton onEdit={() => void 0} />
+							<MoreButton onEdit={() => navigate({
+								to: "/hotels/$hotelSlug/edit",
+								params: {
+									hotelSlug: hotel.slug
+								}
+							})} />
 						</Flex>
 						<Flex justify={"space-between"} align={"end"}>
 							<Text strong={true} style={{ marginTop: 4, display: "block" }}>

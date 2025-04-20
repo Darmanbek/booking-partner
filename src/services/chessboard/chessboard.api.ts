@@ -11,6 +11,22 @@ const useGetChessboardQuery = (hotelSlug: ParamId, params: GetParams = {}) => {
 	})
 }
 
+const useGetChessboardActiveBookingsQuery = (
+	hotelSlug: ParamId,
+	params: GetParams = {}
+) => {
+	return useCrudQuery({
+		queryFn: () => chessboardService.getActiveBookings(hotelSlug, params),
+		queryKey: [
+			"chessboard",
+			hotelSlug,
+			"active-bookings",
+			...Object.values(params)
+		],
+		enabled: !!hotelSlug
+	})
+}
+
 const useCreateChessboardMutation = (hotelSlug: ParamId) => {
 	return useCrudMutation({
 		mutationFn: (form: ChessboardChange) =>
@@ -21,4 +37,8 @@ const useCreateChessboardMutation = (hotelSlug: ParamId) => {
 	})
 }
 
-export { useGetChessboardQuery, useCreateChessboardMutation }
+export {
+	useGetChessboardQuery,
+	useGetChessboardActiveBookingsQuery,
+	useCreateChessboardMutation
+}

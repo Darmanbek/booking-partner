@@ -1,9 +1,11 @@
 import { useParams } from "@tanstack/react-router"
-import { Alert, Card, Descriptions, Flex, Rate } from "antd"
+import { Alert, Card, Descriptions, Flex, Typography } from "antd"
 import { type FC } from "react"
 import { useHotelInfoItems } from "src/pages/hotel/hooks"
 import { useGetHotelsBySlugQuery } from "src/services/hotels"
+import { formatNumber } from "src/shared/utils"
 import { EditButton } from "src/widgets/edit-button"
+import { RatingTag } from "src/widgets/rating-tag"
 
 const HotelInfoCard: FC = () => {
 	const { hotelSlug } = useParams({
@@ -25,9 +27,13 @@ const HotelInfoCard: FC = () => {
 					<Descriptions layout={"vertical"} items={items} />
 					<Alert
 						type={"success"}
-						message={"Количество звёзд"}
 						description={
-							<Rate value={Number(hotel?.data?.rating) || 0} disabled={true} />
+							<Flex align={"center"}>
+								<RatingTag>
+									{formatNumber(hotel?.data?.rating)?.toFixed(1)}
+								</RatingTag>
+								<Typography.Title level={4}>Рейтинг</Typography.Title>
+							</Flex>
 						}
 					/>
 				</Flex>

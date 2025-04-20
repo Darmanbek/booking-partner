@@ -1,4 +1,4 @@
-import { Divider, type GlobalToken, Space, Tag } from "antd"
+import { Divider, type GlobalToken, Space } from "antd"
 import type { ColumnsType } from "antd/es/table"
 import Typography from "antd/es/typography"
 import { type Dayjs } from "dayjs"
@@ -39,21 +39,14 @@ const generateCalendarColumns = (
 						: {}
 				}),
 				render: (_v, record) => (
-					<Space
-						direction={"vertical"}
-						split={<Divider style={{ margin: 0 }} type={"horizontal"} />}
-					>
-						<AvailabilityButton
-							data={{
-								room: record,
-								date: date.format("YYYY-MM-DD"),
-								chessboard: record?.chessboard
-							}}
-						/>
-						<Tag color={"blue"} style={{ margin: "0 auto" }}>
-							10
-						</Tag>
-					</Space>
+					<AvailabilityButton
+						data={{
+							room: record,
+							date: date.format("YYYY-MM-DD"),
+							chessboard: record?.chessboard,
+							active_booking: record?.active_booking
+						}}
+					/>
 				)
 			}
 		}

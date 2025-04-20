@@ -1,53 +1,18 @@
 import { AimOutlined, ArrowLeftOutlined } from "@ant-design/icons"
-import { useNavigate } from "@tanstack/react-router"
+import { useNavigate, useParams } from "@tanstack/react-router"
 import { Button, Card, Col, Form, Input, Row, Select } from "antd"
-import axios from "axios"
 import { type LatLng } from "leaflet"
 import { type FC, useEffect, useRef, useState } from "react"
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet"
-import { useHotelsRegister } from "src/pages/hotels-register/hooks"
-import { useGetCategoriesQuery } from "src/services/categories/categories.api"
-import type { HotelChange } from "src/services/hotels"
+import {
+	useHotelsRegister,
+	useReverseGeocode
+} from "src/pages/hotels-register/hooks"
+import { useGetCategoriesQuery } from "src/services/categories"
+import { type HotelChange, useGetHotelsBySlugQuery } from "src/services/hotels"
 import { useGetLocationsQuery } from "src/services/locations"
 import { useTranslation } from "src/shared/hooks"
 import { Map, type MapRef, RedMarker } from "src/widgets/map"
-
-function useReverseGeocode(lat: number, lon: number, delay = 500) {
-	const [address, setAddress] = useState("")
-	const [loading, setLoading] = useState(false)
-
-	useEffect(() => {
-		const timeoutId = setTimeout(() => {
-			const fetchAddress = async () => {
-				try {
-					setLoading(true)
-					const res = await axios.get(
-						`https://nominatim.openstreetmap.org/reverse`,
-						{
-							params: {
-								format: "jsonv2",
-								lat,
-								lon
-							}
-						}
-					)
-					const data = await res.data
-					setAddress(data.display_name)
-				} catch (err) {
-					console.error("Ошибка геокодинга:", err)
-				} finally {
-					setLoading(false)
-				}
-			}
-
-			fetchAddress()
-		}, delay)
-
-		return () => clearTimeout(timeoutId) // очистка при изменении координат
-	}, [lat, lon, delay])
-
-	return { address, loading }
-}
 
 const CenterMarker = () => {
 	const map = useMap()
@@ -56,6 +21,8 @@ const CenterMarker = () => {
 	const [meCenter, setMeCenter] = useState<Pick<LatLng, "lng" | "lat"> | null>(
 		null
 	)
+	const { hotelSlug } = useParams({ strict: false })
+	const { data: hotel } = useGetHotelsBySlugQuery(hotelSlug)
 	const { address } = useReverseGeocode(center.lat, center.lng)
 
 	useMapEvents({
@@ -68,10 +35,41 @@ const CenterMarker = () => {
 			})
 		}
 	})
+	useEffect(() => {
+		if (!hotelSlug) return
+		if (
+			hotel &&
+			hotel?.data?.location?.coordinates?.latitude &&
+			hotel?.data?.location?.coordinates?.longitude
+		) {
+			map.setView({
+				lat: hotel?.data?.location?.coordinates?.latitude,
+				lng: hotel?.data?.location?.coordinates?.longitude
+			})
+		}
+	}, [hotel, hotelSlug, map])
 
 	useEffect(() => {
-		form.setFieldValue("address", address)
-	}, [address, form])
+		if (hotelSlug) {
+			if (
+				hotel?.data?.location.coordinates?.latitude !== center?.lat ||
+				hotel?.data?.location?.coordinates?.longitude !== center?.lng
+			) {
+				form.setFieldValue("address", address)
+				return
+			}
+		} else {
+			form.setFieldValue("address", address)
+		}
+	}, [
+		address,
+		center?.lat,
+		center?.lng,
+		form,
+		hotel?.data?.location.coordinates?.latitude,
+		hotel?.data?.location.coordinates?.longitude,
+		hotelSlug
+	])
 
 	useEffect(() => {
 		if (navigator?.geolocation) {
