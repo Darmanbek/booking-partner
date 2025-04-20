@@ -35,6 +35,15 @@ const useEditBookingsMutation = () => {
 	})
 }
 
+const useEditBookingsStatusMutation = () => {
+	return useCrudMutation({
+		mutationFn: bookingsService.editStatus,
+		invalidate: {
+			queryKey: ["bookings"]
+		}
+	})
+}
+
 // const useDeleteBookingsMutation = () => {
 // 	return useCrudMutation({
 // 		mutationFn: bookingsService.delete,
@@ -48,6 +57,7 @@ export {
 	useGetBookingsQuery,
 	// useGetBookingsByIdQuery,
 	// useCreateBookingsMutation,
-	useEditBookingsMutation
+	useEditBookingsMutation,
+	useEditBookingsStatusMutation
 	// useDeleteBookingsMutation
 }

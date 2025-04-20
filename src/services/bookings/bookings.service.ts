@@ -5,7 +5,7 @@ import type {
 	ResponseSingleData
 } from "src/services/shared"
 import { api } from "src/shared/api"
-import type { Booking } from "./bookings.types"
+import { Booking, BookingChange } from "./bookings.types"
 
 class BookingsService {
 	get = async (
@@ -34,6 +34,13 @@ class BookingsService {
 		form: Record<string, unknown>
 	): Promise<ResponseSingleData<void>> => {
 		const response = await api.put(`/bookings/${form.id}`, form)
+		return response.data
+	}
+
+	editStatus = async (
+		form: BookingChange
+	): Promise<ResponseSingleData<void>> => {
+		const response = await api.put(`/bookings/${form.id}/${form.type}`, form)
 		return response.data
 	}
 

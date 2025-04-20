@@ -1,4 +1,6 @@
 import {
+	CheckCircleOutlined,
+	CloseOutlined,
 	DeleteOutlined,
 	EditFilled,
 	EyeOutlined,
@@ -16,9 +18,17 @@ interface MoreButtonProps {
 		onConfirm: () => void
 	}
 	onOpen?: () => void
+	onComplete?: () => void
+	onCancel?: () => void
 }
 
-const MoreButton: FC<MoreButtonProps> = ({ onEdit, confirm, onOpen }) => {
+const MoreButton: FC<MoreButtonProps> = ({
+	onEdit,
+	confirm,
+	onOpen,
+	onComplete,
+	onCancel
+}) => {
 	const { modal } = App.useApp()
 
 	const onDelete = useCallback(() => {
@@ -36,21 +46,45 @@ const MoreButton: FC<MoreButtonProps> = ({ onEdit, confirm, onOpen }) => {
 	}, [confirm, modal])
 
 	const menuItems = useMemo(() => {
-		const items: MenuItemType[] = [
-			{
-				key: "edit",
-				label: "Изменить",
-				icon: <EditFilled />,
-				onClick: onEdit
-			}
-		]
+		const items: MenuItemType[] = []
 
 		if (onOpen) {
-			items.unshift({
+			items.push({
 				key: "open",
 				label: "Открыть",
 				icon: <EyeOutlined />,
 				onClick: onOpen
+			})
+		}
+
+		if (onEdit) {
+			items.push({
+				key: "edit",
+				label: "Изменить",
+				icon: <EditFilled />,
+				onClick: onEdit
+			})
+		}
+
+		if (onComplete) {
+			items.push({
+				key: "complete",
+				label: "Завершить",
+				style: {
+					color: "green"
+				},
+				icon: <CheckCircleOutlined />,
+				onClick: onComplete
+			})
+		}
+
+		if (onCancel) {
+			items.push({
+				key: "cancel",
+				label: "Отменить",
+				danger: true,
+				icon: <CloseOutlined />,
+				onClick: onCancel
 			})
 		}
 

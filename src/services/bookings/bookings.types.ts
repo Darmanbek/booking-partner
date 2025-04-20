@@ -20,3 +20,8 @@ export type Booking = {
 	user: Partner
 	booking_rooms: Room[]
 }
+
+export type BookingChange = {
+	id?: number
+	type: "cancel" | "complete"
+}

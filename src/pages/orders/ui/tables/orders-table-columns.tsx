@@ -8,13 +8,18 @@ import {
 import { Flex, Space, Typography } from "antd"
 import Avatar from "antd/es/avatar"
 import type { ColumnsType } from "antd/es/table"
-import type { Booking } from "src/services/bookings"
+import {
+	type Booking,
+	useEditBookingsStatusMutation
+} from "src/services/bookings"
 import { useTranslation } from "src/shared/hooks"
 import { formatPriceWithCurrency } from "src/shared/utils"
 import { MoreButton } from "src/widgets/more-button"
 
 export const useOrdersTableColumns = () => {
 	const { t } = useTranslation()
+
+	const { mutate: editBookingStatus } = useEditBookingsStatusMutation()
 
 	const columns: ColumnsType<Booking> = [
 		{
@@ -105,9 +110,22 @@ export const useOrdersTableColumns = () => {
 			width: 50,
 			title: "",
 			key: "actions",
-			render: () => (
+			render: (_v, record) => (
 				<Space onClick={(e) => e.stopPropagation()}>
-					<MoreButton onOpen={() => void 0} />
+					<MoreButton
+						onComplete={() =>
+							editBookingStatus({
+								id: record?.id,
+								type: "complete"
+							})
+						}
+						onCancel={() =>
+							editBookingStatus({
+								id: record?.id,
+								type: "cancel"
+							})
+						}
+					/>
 				</Space>
 			)
 		}
