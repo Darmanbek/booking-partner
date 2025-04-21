@@ -13,7 +13,7 @@ export type Booking = {
 	special_requests: string
 	payment_method_id: number
 	payment_method: TranslateName
-	booking_type: string
+	booking_type: "personal" | "business"
 	time: string | null
 	user_id: number
 	created_at: string

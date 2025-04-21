@@ -1,11 +1,12 @@
 import {
 	CheckOutlined,
 	ExclamationCircleFilled,
+	MailOutlined,
 	MoonFilled,
 	SyncOutlined,
 	UserOutlined
 } from "@ant-design/icons"
-import { Flex, Space, Typography } from "antd"
+import { Flex, Space, Tag, Typography } from "antd"
 import Avatar from "antd/es/avatar"
 import type { ColumnsType } from "antd/es/table"
 import {
@@ -13,7 +14,7 @@ import {
 	useEditBookingsStatusMutation
 } from "src/services/bookings"
 import { useTranslation } from "src/shared/hooks"
-import { formatPriceWithCurrency } from "src/shared/utils"
+import { formatPhone, formatPriceWithCurrency } from "src/shared/utils"
 import { MoreButton } from "src/widgets/more-button"
 
 export const useOrdersTableColumns = () => {
@@ -43,6 +44,11 @@ export const useOrdersTableColumns = () => {
 							</>
 						)}
 						<Typography.Title level={5}>{t(record?.status)}</Typography.Title>
+						{record?.booking_type === "business" && (
+							<Tag icon={<MailOutlined />} color={"blue-inverse"}>
+								Командировка
+							</Tag>
+						)}
 					</Space>
 					<Typography.Text type={"secondary"}>
 						{`Создано: ${record.created_at}`}
@@ -58,9 +64,14 @@ export const useOrdersTableColumns = () => {
 				<Flex vertical={true}>
 					<Space>
 						<Avatar icon={<UserOutlined />} />
-						<Typography.Title
-							level={5}
-						>{`${value.first_name} ${value.last_name}`}</Typography.Title>
+						<Flex vertical={true}>
+							<Typography.Title
+								level={5}
+							>{`${value.first_name} ${value.last_name}`}</Typography.Title>
+							<Typography.Text>
+								{formatPhone(value.phone_number)}
+							</Typography.Text>
+						</Flex>
 					</Space>
 					<Typography.Text type={"secondary"}>
 						{`Гостей: ${record.total_guests}`}
