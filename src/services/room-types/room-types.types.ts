@@ -1,6 +1,8 @@
+import type { TranslateName } from "src/services/shared"
+
 export type RoomType = {
 	id: number
-	name: string
+	name: TranslateName
 }
 
 export type RoomTypeChange = {

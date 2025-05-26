@@ -44,7 +44,7 @@ export type HotelRule = {
 
 export type HotelLocation = {
 	address: string
-	city: string
+	city: TranslateName
 	city_slug: string
 	city_id: number
 	coordinates: Coordinates

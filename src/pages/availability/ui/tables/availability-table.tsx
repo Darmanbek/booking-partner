@@ -12,6 +12,7 @@ import {
 	useGetChessboardQuery
 } from "src/services/chessboard"
 import { type Room, useGetRoomsQuery } from "src/services/rooms"
+import { useTranslation } from "src/shared/hooks"
 
 export type DataRoom = Room & {
 	chessboard?: Chessboard
@@ -22,6 +23,7 @@ const AvailabilityTable: FC = () => {
 	const { hotelSlug } = useParams({
 		from: "/_layout/hotels/$hotelSlug/_hotel-layout/availability"
 	})
+	const { t } = useTranslation()
 
 	const [days, setDays] = useState(
 		[1, 2, 3, 4, 5, 6, 0].map((el, index) => ({
@@ -82,7 +84,7 @@ const AvailabilityTable: FC = () => {
 									onChange={(e) => onChangeDays(day.date, e.target.checked)}
 									key={index}
 								>
-									{day.name}
+									{t(day.name)}
 								</Checkbox>
 							))}
 						</Space>

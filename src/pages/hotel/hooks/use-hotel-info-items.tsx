@@ -21,7 +21,7 @@ export const useHotelInfoItems = (data?: Hotel) => {
 					href={`https://maps.google.com/?q=${data?.location?.coordinates?.latitude} ${data?.location?.coordinates?.longitude}`}
 					target={"_blank"}
 				>
-					<EnvironmentOutlined /> {data?.location?.city},{" "}
+					<EnvironmentOutlined /> {t(data?.location?.city)},{" "}
 					{data?.location?.address}
 				</a>
 			)

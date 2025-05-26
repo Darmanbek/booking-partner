@@ -6,10 +6,12 @@ import { type FC } from "react"
 import { useRoomsNew } from "src/pages/rooms-new/hooks"
 import { useGetRoomTypesQuery } from "src/services/room-types"
 import type { RoomChange } from "src/services/rooms"
+import { useTranslation } from "src/shared/hooks"
 import { Counter } from "src/shared/ui"
 
 const RoomsNewInfoForm: FC = () => {
 	const router = useRouter()
+	const { t } = useTranslation()
 	const { sm = true } = useResponsive()
 	const { roomId } = useParams({ strict: false })
 	const { form, onFinish } = useRoomsNew()
@@ -61,7 +63,7 @@ const RoomsNewInfoForm: FC = () => {
 									optionFilterProp={"label"}
 									options={roomTypes?.data?.map((item) => ({
 										value: item?.id,
-										label: item?.name
+										label: t(item?.name)
 									}))}
 								/>
 							</Form.Item>

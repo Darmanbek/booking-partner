@@ -4,6 +4,7 @@ import { Button, Card, Image, List, Rate, Typography } from "antd"
 import Flex from "antd/es/flex"
 import { type FC } from "react"
 import { type Hotel } from "src/services/hotels"
+import { useTranslation } from "src/shared/hooks"
 import { MoreButton } from "src/widgets/more-button"
 
 const { Title, Text } = Typography
@@ -14,7 +15,8 @@ interface HotelsListItemProps {
 
 const HotelsListItem: FC<HotelsListItemProps> = ({ data: hotel }) => {
 	const navigate = useNavigate()
-	
+	const { t } = useTranslation()
+
 	return (
 		<>
 			<Card
@@ -42,7 +44,7 @@ const HotelsListItem: FC<HotelsListItemProps> = ({ data: hotel }) => {
 							<Flex vertical={true}>
 								<Title level={5}>{hotel.name.ru}</Title>
 								<Text type={"secondary"}>
-									{hotel.location.city}, {hotel.location.address}
+									{t(hotel.location.city)}, {hotel.location.address}
 								</Text>
 								<div style={{ marginTop: 8 }}>
 									{Number(hotel?.rating) >= 0 && (
@@ -50,12 +52,16 @@ const HotelsListItem: FC<HotelsListItemProps> = ({ data: hotel }) => {
 									)}
 								</div>
 							</Flex>
-							<MoreButton onEdit={() => navigate({
-								to: "/hotels/$hotelSlug/edit",
-								params: {
-									hotelSlug: hotel.slug
+							<MoreButton
+								onEdit={() =>
+									navigate({
+										to: "/hotels/$hotelSlug/edit",
+										params: {
+											hotelSlug: hotel.slug
+										}
+									})
 								}
-							})} />
+							/>
 						</Flex>
 						<Flex justify={"space-between"} align={"end"}>
 							<Text strong={true} style={{ marginTop: 4, display: "block" }}>

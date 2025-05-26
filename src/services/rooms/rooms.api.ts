@@ -29,6 +29,8 @@ const useGetRoomsImagesByIdQuery = (hotelSlug: ParamId, id: ParamId) => {
 }
 
 const useCreateRoomsMutation = (hotelSlug: ParamId) => {
+	const queryClient = useQueryClient()
+
 	return useCrudMutation({
 		mutationFn: (form: RoomChange) => roomsService.create(hotelSlug, form),
 		renderSuccess: () => ({
@@ -36,6 +38,11 @@ const useCreateRoomsMutation = (hotelSlug: ParamId) => {
 		}),
 		invalidate: {
 			queryKey: ["rooms", hotelSlug]
+		},
+		onSuccess: () => {
+			queryClient.refetchQueries({
+				queryKey: ["rooms", hotelSlug]
+			})
 		}
 	})
 }

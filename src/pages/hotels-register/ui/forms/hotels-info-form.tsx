@@ -174,7 +174,7 @@ const HotelsInfoForm: FC = () => {
 									<Select
 										options={locationCities?.data?.map((item) => ({
 											value: item.id,
-											label: item.name
+											label: t(item.name)
 										}))}
 										loading={locationLoading}
 										disabled={locationLoading}

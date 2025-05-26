@@ -73,7 +73,7 @@ const AvailabilityButton: FC<AvailabilityButtonProps> = ({
 					menu={{
 						style: {
 							height: 200,
-							width: 60,
+							width: 44,
 							scrollbarWidth: "thin"
 						},
 						selectable: true,

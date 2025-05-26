@@ -4,7 +4,7 @@ import Typography from "antd/es/typography"
 import { type Dayjs } from "dayjs"
 import { useMemo } from "react"
 import { AvailabilityButton } from "src/pages/availability/features"
-import { useToken } from "src/shared/hooks"
+import { useToken, useTranslation } from "src/shared/hooks"
 import type { DataRoom } from "../ui/tables"
 
 const generateCalendarColumns = (
@@ -61,6 +61,7 @@ export const useAvailabilityTableColumns = (
 ) => {
 	const start = date.startOf("month")
 	const days = date.daysInMonth()
+	const { t } = useTranslation()
 	const { token } = useToken()
 
 	const columns: ColumnsType<DataRoom> = useMemo(
@@ -85,7 +86,7 @@ export const useAvailabilityTableColumns = (
 				direction={"vertical"}
 				split={<Divider style={{ margin: 0 }} type={"horizontal"} />}
 			>
-				{value}
+				{t(value)}
 				<Typography.Text style={{ fontSize: 11 }} type={"secondary"}>
 					(Активные брони)
 				</Typography.Text>
